@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path/path.dart' as path;
-import 'package:youtube_downloader_flutter/src/models/download_manager.dart';
-import 'package:youtube_downloader_flutter/src/providers.dart';
+import 'package:youtube_downloader/src/models/download_manager.dart';
+import 'package:youtube_downloader/src/providers.dart';
 
 class DownloadTile extends HookWidget {
   final SingleTrack video;

@@ -1,4 +1,4 @@
-package net.hexah.youtube_downloader_flutter
+package net.hexah.youtube_downloader
 
 import io.flutter.embedding.android.FlutterActivity
 

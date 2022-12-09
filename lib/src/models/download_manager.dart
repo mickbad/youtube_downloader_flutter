@@ -10,7 +10,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:path/path.dart' as path;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:youtube_downloader_flutter/main.dart';
+import 'package:youtube_downloader/main.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import 'query_video.dart';

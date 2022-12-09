@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:youtube_downloader_flutter/src/shared.dart';
+import 'package:youtube_downloader/src/shared.dart';
 
 import '../../providers.dart';
 

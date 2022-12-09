@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "youtube_downloader_flutter")
-set(APPLICATION_ID "net.hexah.youtube_downloader_flutter")
+set(BINARY_NAME "youtube_downloader")
+set(APPLICATION_ID "net.hexah.youtube_downloader")
 
 cmake_policy(SET CMP0063 NEW)
 

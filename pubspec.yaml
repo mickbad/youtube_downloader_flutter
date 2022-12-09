@@ -1,4 +1,4 @@
-name: youtube_downloader_flutter
+name: youtube_downloader
 description: Downloads videos from youtube with ease!
 
 publish_to: 'none'

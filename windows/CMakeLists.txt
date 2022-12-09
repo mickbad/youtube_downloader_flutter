@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(youtube_downloader_flutter LANGUAGES CXX)
+project(youtube_downloader LANGUAGES CXX)
 
-set(BINARY_NAME "youtube_downloader_flutter")
+set(BINARY_NAME "youtube_downloader")
 
 cmake_policy(SET CMP0063 NEW)
 

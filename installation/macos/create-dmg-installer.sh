@@ -12,11 +12,9 @@ if [ ! -x "$(which create-dmg)" ]; then
 fi
 
 # vérification du logiciel à installer
-APPNAME_ORIG="youtube_downloader_flutter.app"
 APPNAME="youtube_downloader.app"
-APP_ORIG="../../build/macos/Build/Products/Release/$APPNAME_ORIG"
 APP="../../build/macos/Build/Products/Release/$APPNAME"
-if [ ! -d "$APP_ORIG" ]; then
+if [ ! -d "$APP" ]; then
     echo "No release build found"
     echo "Please make a compilation from IDE or commandline"
     echo
@@ -24,7 +22,6 @@ if [ ! -d "$APP_ORIG" ]; then
     echo
     exit 1
 fi
-cp -a "$APP_ORIG" "$APP"
 
 # vérification de l'image de fond
 DMG_BACKGROUND="apps-darwin-dmg-bg.png"

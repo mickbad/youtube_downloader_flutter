@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win32/win32.dart';
 import 'package:window_size/window_size.dart';
-import 'package:youtube_downloader_flutter/src/models/download_manager.dart';
+import 'package:youtube_downloader/src/models/download_manager.dart';
 
 import 'src/models/settings.dart';
 import 'src/providers.dart';

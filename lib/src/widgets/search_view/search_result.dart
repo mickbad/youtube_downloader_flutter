@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:youtube_downloader_flutter/src/services/search_service.dart';
+import 'package:youtube_downloader/src/services/search_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../providers.dart';

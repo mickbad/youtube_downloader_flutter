@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:youtube_downloader_flutter/src/models/query_video.dart';
+import 'package:youtube_downloader/src/models/query_video.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 abstract class SearchService extends ChangeNotifier {
