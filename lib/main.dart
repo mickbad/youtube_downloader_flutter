@@ -55,6 +55,11 @@ class MainObserver implements ProviderObserver {
       Object? newValue, ProviderContainer container) {
     debugPrint('Update: $provider : $newValue');
   }
+
+  @override
+  void providerDidFail(ProviderBase provider, Object error, StackTrace stackTrace, ProviderContainer container) {
+    // TODO: implement providerDidFail
+  }
 }
 
 class AppInit extends HookConsumerWidget {
@@ -65,8 +70,8 @@ class AppInit extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fetched = useState<bool>(false);
-    final settings = ref.watch(settingsProvider);
-    final downloadManager = ref.watch(downloadProvider);
+    final settings = ref.watch(settingsProvider.state);
+    final downloadManager = ref.watch(downloadProvider.state);
 
     useEffect(() {
       SharedPreferences.getInstance().then((value) async {
@@ -74,6 +79,7 @@ class AppInit extends HookConsumerWidget {
         settings.state = await SettingsImpl.init(value);
         fetched.value = true;
       });
+      return null;
     }, []);
 
     if (!fetched.value) {
@@ -90,7 +96,7 @@ class AppInit extends HookConsumerWidget {
     return MaterialApp(
       scaffoldMessengerKey: scaffoldKey,
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: HomePage(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: settings.state.locale,

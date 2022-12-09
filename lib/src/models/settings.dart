@@ -13,10 +13,13 @@ class Settings {
           {String? downloadPath,
           ThemeSetting? theme,
           String? ffmpegContainer,
+          String? ffmpegPath,
           Locale? locale}) =>
       throw UnimplementedError();
 
   String get ffmpegContainer => throw UnimplementedError();
+
+  String get ffmpegPath => throw UnimplementedError();
 
   String get downloadPath => throw UnimplementedError();
 
@@ -39,16 +42,20 @@ class SettingsImpl implements Settings {
   final String ffmpegContainer;
 
   @override
+  final String ffmpegPath;
+
+  @override
   final Locale locale;
 
   const SettingsImpl._(this._prefs, this.downloadPath, this.theme,
-      this.ffmpegContainer, this.locale);
+      this.ffmpegContainer, this.ffmpegPath, this.locale);
 
   @override
   SettingsImpl copyWith(
       {String? downloadPath,
       ThemeSetting? theme,
       String? ffmpegContainer,
+      String? ffmpegPath,
       Locale? locale}) {
     if (downloadPath != null) {
       _prefs.setString('download_path', downloadPath);
@@ -59,6 +66,9 @@ class SettingsImpl implements Settings {
     if (ffmpegContainer != null) {
       _prefs.setString('ffmpeg_container', ffmpegContainer);
     }
+    if (ffmpegPath != null) {
+      _prefs.setString('ffmpeg_path', ffmpegPath);
+    }
     if (locale != null) {
       _prefs.setString('locale', locale.languageCode);
     }
@@ -68,6 +78,7 @@ class SettingsImpl implements Settings {
         downloadPath ?? this.downloadPath,
         theme ?? this.theme,
         ffmpegContainer ?? this.ffmpegContainer,
+        ffmpegPath ?? this.ffmpegPath,
         locale ?? this.locale);
   }
 
@@ -87,6 +98,19 @@ class SettingsImpl implements Settings {
       ffmpegContainer = '.mp4';
       prefs.setString('ffmpeg_container', '.mp4');
     }
+    var ffmpegPath = prefs.getString('ffmpeg_path');
+    if (ffmpegPath == null) {
+      ffmpegPath = 'ffmpeg';
+
+      // check if ffmpeg ready
+      final process = await Process.run(ffmpegPath, [], runInShell: true);
+      if (!(process.stderr as String).startsWith("ffmpeg version")) {
+        // failed
+        ffmpegPath = "please-install-ffmpeg";
+      }
+
+      prefs.setString('ffmpeg_path', 'ffmpeg');
+    }
 
     var langCode = prefs.getString('locale');
     if (langCode == null) {
@@ -95,8 +119,9 @@ class SettingsImpl implements Settings {
       prefs.setString('locale', defaultLang.languageCode);
     }
     return SettingsImpl._(prefs, path, ThemeSetting.fromId(themeId),
-        ffmpegContainer, Locale(langCode));
+        ffmpegContainer, ffmpegPath, Locale(langCode));
   }
+
 }
 
 class ThemeSetting {

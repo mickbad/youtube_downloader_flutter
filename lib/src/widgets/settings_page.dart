@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../models/download_manager.dart';
 import '../models/settings.dart';
 import '../providers.dart';
 
@@ -23,7 +26,7 @@ class SettingsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final intl = AppLocalizations.of(context)!;
-    final settings = ref.watch(settingsProvider);
+    final settings = ref.watch(settingsProvider.state);
 
     return Scaffold(
       appBar: const PreferredSize(
@@ -63,6 +66,31 @@ class SettingsPage extends HookConsumerWidget {
             height: 0,
           ),
           ListTile(
+            title: Text(intl.ffmpegPath),
+            subtitle: Text(settings.state.ffmpegPath),
+            onTap: () async {
+              final result = await FilePicker.platform
+                  .pickFiles(dialogTitle: 'Choose FFMPEG localisation');
+              if (result?.files.single.path?.isEmpty ?? true) {
+                return;
+              }
+
+              // check if ffmpeg ready
+              final ffmpegPath = result?.files.single.path ?? "nothing";
+              final process = await Process.run(ffmpegPath, [], runInShell: true);
+              if (!(process.stderr as String).startsWith("ffmpeg version")) {
+                showSnackbar(SnackBar(content: Text(intl.ffmpegNotFound)));
+                return;
+              }
+
+              // save
+              settings.state = settings.state.copyWith(ffmpegPath: ffmpegPath);
+            },
+          ),
+          const Divider(
+            height: 0,
+          ),
+          ListTile(
             title: Text(intl.ffmpegContainer),
             subtitle: Text(intl.ffmpegDescription),
             trailing: DropdownButton(
@@ -71,8 +99,6 @@ class SettingsPage extends HookConsumerWidget {
                   settings.state.copyWith(ffmpegContainer: value),
               items: ffmpegContainers,
             ),
-            onTap: () => themeOnChanged(
-                settings, settings.state.theme != ThemeSetting.dark),
           ),
           const Divider(
             height: 0,
@@ -85,8 +111,6 @@ class SettingsPage extends HookConsumerWidget {
                   settings.state = settings.state.copyWith(locale: value),
               items: locales,
             ),
-            onTap: () => themeOnChanged(
-                settings, settings.state.theme != ThemeSetting.dark),
           ),
         ],
       ),

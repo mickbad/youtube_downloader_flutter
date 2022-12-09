@@ -19,6 +19,7 @@ class AppDrawer extends StatelessWidget {
             leading: const Icon(Icons.settings),
             onTap: () {
               //Todo: Replace Route with named route or Navigator2
+              Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => SettingsPage()));
             },

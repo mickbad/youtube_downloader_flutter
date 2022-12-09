@@ -1,12 +1,15 @@
 {
   "title": "Youtube Downloader",
   "startSearch": "Start searching!",
+  "searchUrl": "Download URL",
+  "searchUrlTooltip": "Paste your URL from clipboard",
 
   "settings": "Impostazioni",
   "darkMode": "Modalità scura",
+  "ffmpegPath": "FFMPEG path localisation",
   "ffmpegContainer": "ffmpeg container",
   "ffmpegDescription": "Il format di output quando due tracce (audio + video) vengono unite",
-  "ffmpegNotFound": "FFMPEG non trovato nella PATH",
+  "ffmpegNotFound": "FFMPEG non trovato in PATH o non configurato",
   "language": "Lingua",
   "downloadDir": "Cartella Download",
   "selectDownloadDir": "Selezione la cartella per i download",
@@ -14,9 +17,17 @@
 
   "permissionError": "L'app necessità del permesso di storage per scaricare i contenuti!",
 
-
   "downloads": "Downloads",
   "author": "Autore",
+  "uploadDateRow": "Published",
+
+  "tracksTooltip": "Tap on line to download stream or long tap to select stream for merge",
+  "mergeTracks": "Download & Merge tracks!",
+  "tracksBestMerge": "Best video + audio quality",
+  "tracksAll": "All",
+  "tracksVideoAudio": "Video + Audio",
+  "tracksVideo": "Video Only",
+  "tracksAudio": "Audio Only",
 
   "startDownload": "Inizio download: {title}",
   "@startDownload": {
@@ -80,6 +91,16 @@
 
   "finishMerge": "Video completo: {title}",
   "@finishMerge": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  },
+
+  "finishConvert": "Convertion finished : {title}",
+  "@finishConvert": {
     "placeholders": {
       "title": {
         "example": "Best video ever",

@@ -38,8 +38,7 @@ class SearchBar extends HookWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  showSearch(
-                      context: context, delegate: CustomSearchDelegate());
+                  showSearch(context: context, delegate: CustomSearchDelegate());
                 },
                 icon: const Icon(
                   Icons.search,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:youtube_downloader_flutter/src/models/download_manager.dart';
 import 'package:youtube_downloader_flutter/src/models/query_video.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -14,32 +15,13 @@ class StreamsList extends HookConsumerWidget {
 
   StreamsList(this.video, {Key? key}) : super(key: key);
 
-  static const List<DropdownMenuItem<Filter>> items = [
-    DropdownMenuItem(
-      value: Filter.all,
-      child: Text('All'),
-    ),
-    DropdownMenuItem(
-      value: Filter.videoAudio,
-      child: Text('Video + Audio'),
-    ),
-    DropdownMenuItem(
-      value: Filter.video,
-      child: Text('Video Only'),
-    ),
-    DropdownMenuItem(
-      value: Filter.audio,
-      child: Text('Audio Only'),
-    ),
-  ];
-
   final mergeTracks = StreamMerge();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final yt = ref.watch(ytProvider);
-    final settings = ref.watch(settingsProvider).state;
-    final downloadManager = ref.watch(downloadProvider).state;
+    final settings = ref.watch(settingsProvider.state);
+    final downloadManager = ref.watch(downloadProvider.state);
 
     final filter = useState(Filter.all);
     final merger = useListenable(mergeTracks);
@@ -55,6 +37,107 @@ class StreamsList extends HookConsumerWidget {
 
     final filteredList = filterStream(manifest.data!, filter.value);
 
+    // search best video
+    List<Widget> filteredListWidget = [];
+    var streamBestVideo = null;
+    var streamBestAudio = null;
+
+    // list of stream widget
+    for(var stream in filteredList) {
+      Widget widgetStream = ListTile(
+          title: Text('${stream.container} ${stream.runtimeType}'));
+
+      if (stream is MuxedStreamInfo) {
+        widgetStream = MaterialButton(
+          onPressed: () {
+            downloadManager.state.downloadStream(yt, video, settings.state,
+                StreamType.video, AppLocalizations.of(context)!,
+                singleStream: stream);
+          },
+          child: ListTile(
+            subtitle: Text(
+                '${stream.qualityLabel} - ${stream.videoCodec} | ${stream.audioCodec}'),
+            title: Text(
+                '${AppLocalizations.of(context)!.tracksVideoAudio} (.${stream.container}) - ${bytesToString(stream.size.totalBytes)}'),
+          ),
+        );
+      }
+      if (stream is VideoOnlyStreamInfo) {
+        // search best format
+        streamBestVideo ??= stream; // first is best
+        if (/*stream.videoCodec == "mp4" && */stream.size.totalBytes > streamBestVideo.size.totalBytes) {
+          // set new one
+          streamBestVideo = stream;
+        }
+
+        widgetStream = MaterialButton(
+          onLongPress: () {
+            merger.video = stream;
+          },
+          onPressed: () {
+            downloadManager.state.downloadStream(yt, video, settings.state,
+                StreamType.video, AppLocalizations.of(context)!,
+                singleStream: stream);
+          },
+          child: ListTile(
+            subtitle: Text(
+                '${stream.qualityLabel} - ${stream.videoCodec}'),
+            title: Text(
+                '${AppLocalizations.of(context)!.tracksVideo} (.${stream.container}) - ${bytesToString(stream.size.totalBytes)}'),
+            trailing:
+            stream == merger.video ? const Icon(Icons.done) : null,
+          ),
+        );
+      }
+      if (stream is AudioOnlyStreamInfo) {
+        // search best format
+        streamBestAudio ??= stream; // first is best
+        if (stream.size.totalBytes > streamBestAudio.size.totalBytes) {
+          // set new one
+          streamBestAudio = stream;
+        }
+        widgetStream = MaterialButton(
+          onLongPress: () {
+            merger.audio = stream;
+          },
+          onPressed: () {
+            downloadManager.state.downloadStream(yt, video, settings.state,
+                StreamType.audio, AppLocalizations.of(context)!,
+                singleStream: stream);
+          },
+          child: ListTile(
+            subtitle: Text(
+                '${stream.audioCodec} | Bitrate: ${stream.bitrate}'),
+            title: Text(
+                '${AppLocalizations.of(context)!.tracksAudio} (.${stream.container}) - ${bytesToString(stream.size.totalBytes)}'),
+            trailing:
+            stream == merger.audio ? const Icon(Icons.done) : null,
+          ),
+        );
+      }
+
+      // add widget
+      filteredListWidget.add(widgetStream);
+    }
+
+    // add best stream merge
+    if (streamBestVideo != null && streamBestAudio != null) {
+      filteredListWidget.insert(0,
+          MaterialButton(
+            onPressed: () {
+              merger.video = streamBestVideo;
+              merger.audio = streamBestAudio;
+            },
+            child: ListTile(
+              subtitle: Text(
+                  'video: ${streamBestVideo.qualityLabel} - ${streamBestVideo.videoCodec} | audio: ${streamBestAudio.audioCodec}\nvideo ouput in ${settings.state.ffmpegContainer} format'),
+              title: Text(
+                  '${AppLocalizations.of(context)!.tracksBestMerge} (.${streamBestVideo.container})'),
+            ),
+          )
+      );
+    }
+
     return AlertDialog(
       contentPadding: const EdgeInsets.only(top: 9),
       title: Text(
@@ -66,70 +149,76 @@ class StreamsList extends HookConsumerWidget {
       content: SizedBox(
         width: double.maxFinite,
         height: double.maxFinite,
-        child: ListView.builder(
-            padding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 24.0),
-            itemCount: filteredList.length,
-            itemBuilder: (context, index) {
-              final stream = filteredList[index];
-              if (stream is MuxedStreamInfo) {
-                return MaterialButton(
-                  onPressed: () {
-                    downloadManager.downloadStream(yt, video, settings,
-                        StreamType.video, AppLocalizations.of(context)!,
-                        singleStream: stream);
-                  },
-                  child: ListTile(
-                    subtitle: Text(
-                        '${stream.videoQualityLabel} - ${stream.videoCodec} | ${stream.audioCodec}'),
-                    title: Text(
-                        'Video + Audio (.${stream.container}) - ${bytesToString(stream.size.totalBytes)}'),
+        child: Column(
+          children: [
+            // preview
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                      onTap: () async {
+                        if (!await launchUrlString("https://youtu.be/${video.id}")) {
+                          // throw 'Could not launch $_url';
+                          // oops nothing
+                        }
+                      },
+                      child: Image.network(video.thumbnail, height: 150, fit: BoxFit.fitWidth,)
                   ),
-                );
-              }
-              if (stream is VideoOnlyStreamInfo) {
-                return MaterialButton(
-                  onLongPress: () {
-                    merger.video = stream;
-                  },
-                  onPressed: () {
-                    downloadManager.downloadStream(yt, video, settings,
-                        StreamType.video, AppLocalizations.of(context)!,
-                        singleStream: stream);
-                  },
-                  child: ListTile(
-                    subtitle: Text(
-                        '${stream.videoQualityLabel} - ${stream.videoCodec}'),
-                    title: Text(
-                        'Video Only (.${stream.container}) - ${bytesToString(stream.size.totalBytes)}'),
-                    trailing:
-                        stream == merger.video ? const Icon(Icons.done) : null,
-                  ),
-                );
-              }
-              if (stream is AudioOnlyStreamInfo) {
-                return MaterialButton(
-                  onLongPress: () {
-                    merger.audio = stream;
-                  },
-                  onPressed: () {
-                    downloadManager.downloadStream(yt, video, settings,
-                        StreamType.audio, AppLocalizations.of(context)!,
-                        singleStream: stream);
-                  },
-                  child: ListTile(
-                    subtitle: Text(
-                        '${stream.audioCodec} | Bitrate: ${stream.bitrate}'),
-                    title: Text(
-                        'Audio Only (.${stream.container}) - ${bytesToString(stream.size.totalBytes)}'),
-                    trailing:
-                        stream == merger.audio ? const Icon(Icons.done) : null,
-                  ),
-                );
-              }
-              return ListTile(
-                  title: Text('${stream.container} ${stream.runtimeType}'));
-            }),
+                ),
+
+                Positioned(
+                    right: 9,
+                    bottom: 9,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(.75),
+                          borderRadius: BorderRadius.circular(4)),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 3, vertical: 1),
+                      child: Text(
+                        _formatDuration(video.duration),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            ?.copyWith(
+                            fontSize: 11, color: Colors.white),
+                      ),
+                    )),
+              ],
+            ),
+            Text(AppLocalizations.of(context)!.tracksTooltip),
+
+            // streams
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 24.0),
+                itemCount: filteredListWidget.length,
+                itemBuilder: (context, index) {
+                  return filteredListWidget[index];
+                }),
+            ),
+          ],
+        ),
       ),
+
+      // close dialog icon
+      iconPadding: EdgeInsets.zero,
+      iconColor: Colors.red,
+      icon: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.clear),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+
+      // actions
+      actionsAlignment: MainAxisAlignment.end,
       actions: <Widget>[
         if (merger.audio != null && merger.video != null)
           OutlinedButton(
@@ -137,14 +226,31 @@ class StreamsList extends HookConsumerWidget {
                   padding: MaterialStateProperty.all<EdgeInsets>(
                       const EdgeInsets.all(20))),
               onPressed: () {
-                downloadManager.downloadStream(yt, video, settings,
+                downloadManager.state.downloadStream(yt, video, settings.state,
                     StreamType.video, AppLocalizations.of(context)!,
-                    merger: merger, ffmpegContainer: settings.ffmpegContainer);
+                    merger: merger, ffmpegContainer: settings.state.ffmpegContainer);
               },
-              child: const Text('Download & Merge tracks!')),
+              child: Text(AppLocalizations.of(context)!.mergeTracks)),
         DropdownButton<Filter>(
           value: filter.value,
-          items: items,
+          items: [
+            DropdownMenuItem(
+              value: Filter.all,
+              child: Text(AppLocalizations.of(context)!.tracksAll),
+            ),
+            DropdownMenuItem(
+              value: Filter.videoAudio,
+              child: Text(AppLocalizations.of(context)!.tracksVideoAudio),
+            ),
+            DropdownMenuItem(
+              value: Filter.video,
+              child: Text(AppLocalizations.of(context)!.tracksVideo),
+            ),
+            DropdownMenuItem(
+              value: Filter.audio,
+              child: Text(AppLocalizations.of(context)!.tracksAudio),
+            ),
+          ],
           onChanged: (newFilter) {
             filter.value = newFilter!;
           },
@@ -172,4 +278,19 @@ enum Filter {
   videoAudio,
   audio,
   video,
+}
+
+String _formatDuration(Duration d) {
+  final totalSecs = d.inSeconds;
+  final hours = totalSecs ~/ 3600;
+  final minutes = (totalSecs % 3600) ~/ 60;
+  final seconds = totalSecs % 60;
+  final buffer = StringBuffer();
+
+  if (hours > 0) {
+    buffer.write('$hours:');
+  }
+  buffer.write('${minutes.toString().padLeft(2, '0')}:');
+  buffer.write(seconds.toString().padLeft(2, '0'));
+  return buffer.toString();
 }

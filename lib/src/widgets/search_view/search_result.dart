@@ -20,17 +20,17 @@ class SearchResult extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final service = ref.watch(searchProvider).state;
-    useListenable(service);
+    final service = ref.watch(searchProvider.state);
+    useListenable(service.state);
 
-    if (service.error) {
-      return Text(service.errorMessage);
+    if (service.state.error) {
+      return Text(service.state.errorMessage);
     }
 
     if (size.width >= 560) {
-      return LandscapeSearch(query: query, service: service);
+      return LandscapeSearch(query: query, service: service.state);
     }
-    return PortraitSearch(query: query, service: service);
+    return PortraitSearch(query: query, service: service.state);
   }
 }
 
@@ -124,6 +124,8 @@ class LandscapeSearch extends HookWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+
+                      // author
                       const Spacer(),
                       Flexible(
                         flex: 2,
@@ -135,8 +137,24 @@ class LandscapeSearch extends HookWidget {
                                   .textTheme
                                   .subtitle1
                                   ?.copyWith(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              minFontSize: 6),
+                        ),
+                      ),
+
+                      // date
+                      const SizedBox(height: 5,),
+                      Flexible(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 17),
+                          child: AutoSizeText(
+                              '${AppLocalizations.of(context)!.uploadDateRow}: ${video.uploadDateRaw}',
+                              style: Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 10),
                               textAlign: TextAlign.start,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -249,6 +267,16 @@ class PortraitSearch extends StatelessWidget {
                         .textTheme
                         .subtitle1
                         ?.copyWith(fontSize: 13),
+                  ),
+
+                  // date
+                  const SizedBox(height: 5,),
+                  Text(
+                    video.uploadDateRaw ?? "",
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(fontSize: 10),
                   ),
                   const SizedBox(height: 4),
                 ],

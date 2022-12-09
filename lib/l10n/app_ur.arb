@@ -1,0 +1,100 @@
+{
+  "title": "Youtube Downloader",
+  "startSearch": "!تلاش شروع کرو",
+  "searchUrlTooltip": "Paste your URL from clipboard",
+
+  "settings": "ترتیبات",
+  "darkMode": "اندھیرا موڈ",
+  "ffmpegContainer": "ffmpeg ڈبہ",
+  "ffmpegDescription": "یہ آؤٹ پٹ فارمیٹ ہے جب دو ٹریکس (آڈیو + ویڈیو) آپس میں ضم ہوتے ہیں۔",
+  "ffmpegNotFound": "میں Path ملا نہیں FFMPEG or not configured",
+  "language": "زبان",
+  "downloadDir": "ڈائریکٹری ڈاؤن لوڈ",
+  "selectDownloadDir": "ڈاؤن لوڈ ڈائریکٹری منتخب کریں۔",
+  "invalidDir": "غلط ڈائریکٹری",
+
+  "downloads": "ڈاؤن لوڈز",
+  "author": "مصنف",
+
+  "permissionError": "!ایپ کو فائلیں ڈاؤن لوڈ کرنے کے لیے اسٹوریج کی اجازت درکار ہے",
+
+  "startDownload": "{title}: ڈاؤن لوڈ کرنا شروع ہوا",
+  "@startDownload": {
+    "placeholders": {
+      "title": {
+        "example": "اب تک کی بہترین ویڈیو",
+        "description": "ویڈیو کا عنوان"
+      }
+    }
+  },
+
+  "failDownload": "{title}: ڈاؤن لوڈنگ ناکام ہو گئی۔",
+  "@failDownload": {
+    "placeholders": {
+      "title": {
+        "example": "اب تک کی بہترین ویڈیو",
+        "description": "ویڈیو کا عنوان"
+      }
+    }
+  },
+
+  "cancelDownload": "{title}: ڈاؤن لوڈنگ منسوخ کر دی گئی۔",
+  "@cancelDownload": {
+    "placeholders": {
+      "title": {
+        "example": "اب تک کی بہترین ویڈیو",
+        "description": "ویڈیو کا عنوان"
+      }
+    }
+  },
+
+  "finishDownload": "{title}: ڈاؤن لوڈ مکمل ہو گیا۔",
+  "@finishDownload": {
+    "placeholders": {
+      "title": {
+        "example": "اب تک کی بہترین ویڈیو",
+        "description": "ویڈیو کا عنوان"
+      }
+    }
+  },
+
+  "startMerge": "{title}: ٹریکس کو ضم کرنا",
+  "@startMerge": {
+    "placeholders": {
+      "title": {
+        "example": "اب تک کی بہترین ویڈیو",
+        "description": "ویڈیو کا عنوان"
+      }
+    }
+  },
+
+  "cancelMerge": "{title}: انضمام منسوخ کر دیا گیا۔",
+  "@cancelMerge": {
+    "placeholders": {
+      "title": {
+        "example": "اب تک کی بہترین ویڈیو",
+        "description": "ویڈیو کا عنوان"
+      }
+    }
+  },
+
+  "finishMerge": "{title}: ضم ہو گیا۔",
+  "@finishMerge": {
+    "placeholders": {
+      "title": {
+        "example": "اب تک کی بہترین ویڈیو",
+        "description": "ویڈیو کا عنوان"
+      }
+    }
+  },
+
+  "finishConvert": "Convertion finished : {title}",
+  "@finishConvert": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  }
+}

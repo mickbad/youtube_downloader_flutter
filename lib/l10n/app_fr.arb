@@ -1,0 +1,111 @@
+{
+  "title": "Youtube Downloader",
+  "startSearch": "Faîtes une recherche ou saisissez une URL ",
+  "searchUrl": "Télécharger l'URL",
+  "searchUrlTooltip": "Coller votre url depuis le presse papier",
+
+  "settings": "Paramètres",
+  "darkMode": "Mode nuit",
+  "ffmpegPath": "Chemin d'accès à FFMPEG",
+  "ffmpegContainer": "ffmpeg extension",
+  "ffmpegDescription": "Format de sortie pour fusionner deux pistes (audio + video)",
+  "ffmpegNotFound": "FFMPEG introuvable dans le PATH ou non configuré",
+  "language": "Langage",
+  "downloadDir": "Dossier de téléchargement",
+  "selectDownloadDir": "Sélectionnez un dossier de téléchargement",
+  "invalidDir": "Dossier invalide",
+
+  "downloads": "Téléchargements",
+  "author": "Auteur",
+  "uploadDateRow": "Publication",
+
+  "tracksTooltip": "Tappez sur une ligne pour télécharger ou un appui long pour sélectionner la fusion",
+  "mergeTracks": "Télécharger et fusionner les pistes !",
+  "tracksBestMerge": "Meilleure qualité vidéo et audio",
+  "tracksAll": "Tout",
+  "tracksVideoAudio": "Vidéo et Audio",
+  "tracksVideo": "Vidéo seulement",
+  "tracksAudio": "Audio seulement",
+
+  "permissionError": "L'application a besoin des permissions de stockage pour télécharger les fichiers !",
+
+  "startDownload": "Démarrage du téléchargement : {title}",
+  "@startDownload": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  },
+
+  "failDownload": "Echec de téléchargement : {title}",
+  "@failDownload": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  },
+
+  "cancelDownload": "Téléchargement annulé : {title}",
+  "@cancelDownload": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  },
+
+  "finishDownload": "Téléchargement terminé: {title}",
+  "@finishDownload": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  },
+
+  "startMerge": "Fusion des pistes de : {title}",
+  "@startMerge": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  },
+
+  "cancelMerge": "Annulation de la fusion de : {title}",
+  "@cancelMerge": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  },
+
+  "finishMerge": "Fusion terminée : {title}",
+  "@finishMerge": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  },
+
+  "finishConvert": "Convertion terminée : {title}",
+  "@finishConvert": {
+    "placeholders": {
+      "title": {
+        "example": "Best video ever",
+        "description": "Video title"
+      }
+    }
+  }
+}

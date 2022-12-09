@@ -11,10 +11,10 @@ class DownloadsPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final downloadManager = ref.watch(downloadProvider).state;
-    useListenable(downloadManager);
+    final downloadManager = ref.watch(downloadProvider.state);
+    useListenable(downloadManager.state);
 
-    final length = downloadManager.videos.length;
+    final length = downloadManager.state.videos.length;
 
     return Scaffold(
       appBar: const PreferredSize(
@@ -26,7 +26,7 @@ class DownloadsPage extends HookConsumerWidget {
         ),
         itemCount: length,
         itemBuilder: (BuildContext context, int index) {
-          final video = downloadManager.videos[(length - 1) - index];
+          final video = downloadManager.state.videos[(length - 1) - index];
           return DownloadTile(video);
         },
       ),

@@ -1,0 +1,2 @@
+doc : https://stackoverflow.com/questions/60025373/how-to-release-a-macos-app-written-with-flutter
+

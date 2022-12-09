@@ -16,7 +16,7 @@ class DownloadTile extends HookWidget {
     switch (video.streamType) {
       case StreamType.audio:
         {
-          if (path.endsWith('.mp4')) {
+          if (path.endsWith('.mp4') || path.endsWith('.mp3')) {
             return 'audio/mpeg';
           } else if (path.endsWith('.webm')) {
             return 'audio/webm';
@@ -95,7 +95,7 @@ class TrailingIcon extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final downloadManager = ref.watch(downloadProvider).state;
+    final downloadManager = ref.watch(downloadProvider.state);
 
     switch (video.downloadStatus) {
       case DownloadStatus.downloading:
@@ -117,7 +117,7 @@ class TrailingIcon extends HookConsumerWidget {
             IconButton(
                 icon: const Icon(Icons.delete_forever),
                 onPressed: () async {
-                  downloadManager.removeVideo(video);
+                  downloadManager.state.removeVideo(video);
                 }),
           ],
         );
@@ -132,7 +132,7 @@ class TrailingIcon extends HookConsumerWidget {
         return IconButton(
             icon: const Icon(Icons.delete_forever),
             onPressed: () async {
-              downloadManager.removeVideo(video);
+              downloadManager.state.removeVideo(video);
             });
     }
   }

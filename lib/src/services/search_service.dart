@@ -54,11 +54,14 @@ class _ChannelSearchServiceImpl extends ChangeNotifier
   _ChannelSearchServiceImpl(this.yt, this.channelId) {
     yt.channels.getUploadsFromPage(channelId).then((value) {
       _videos.addAll(value.where((e) => !e.isLive).map((e) => QueryVideo(
-          e.title,
-          e.id.value,
-          e.author,
-          e.duration!,
-          e.thumbnails.highResUrl)));
+        e.title,
+        e.id.value,
+        e.author,
+        e.duration!,
+        e.thumbnails.highResUrl,
+        e.uploadDate,
+        e.uploadDateRaw,
+      )));
       _loading = false;
       _currentPage = value;
       notifyListeners();
@@ -90,7 +93,7 @@ class _ChannelSearchServiceImpl extends ChangeNotifier
     }
     _currentPage = page;
     _videos.addAll(_currentPage.where((e) => !e.isLive).map((e) => QueryVideo(
-        e.title, e.id.value, e.author, e.duration!, e.thumbnails.highResUrl)));
+        e.title, e.id.value, e.author, e.duration!, e.thumbnails.highResUrl, e.uploadDate, e.uploadDateRaw)));
     _loading = false;
     notifyListeners();
   }
@@ -117,16 +120,19 @@ class _VideoSearchServiceImpl extends ChangeNotifier implements SearchService {
   UnmodifiableListView<QueryVideo> get videos => UnmodifiableListView(_videos);
 
   var _endResults = false;
-  late SearchList _currentPage;
+  late VideoSearchList _currentPage;
 
   _VideoSearchServiceImpl(this.yt, this.query) {
-    yt.search.getVideos(query).then((value) {
+    yt.search.search(query).then((value) {
       _videos.addAll(value.where((e) => !e.isLive).map((e) => QueryVideo(
-          e.title,
-          e.id.value,
-          e.author,
-          e.duration!,
-          e.thumbnails.highResUrl)));
+        e.title,
+        e.id.value,
+        e.author,
+        e.duration!,
+        e.thumbnails.highResUrl,
+        e.uploadDate,
+        e.uploadDateRaw,
+      )));
       _loading = false;
       _currentPage = value;
       notifyListeners();
@@ -158,7 +164,7 @@ class _VideoSearchServiceImpl extends ChangeNotifier implements SearchService {
     }
     _currentPage = page;
     _videos.addAll(_currentPage.where((e) => !e.isLive).map((e) => QueryVideo(
-        e.title, e.id.value, e.author, e.duration!, e.thumbnails.highResUrl)));
+        e.title, e.id.value, e.author, e.duration!, e.thumbnails.highResUrl, e.uploadDate, e.uploadDateRaw)));
     _loading = false;
     notifyListeners();
   }

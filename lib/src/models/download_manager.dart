@@ -34,7 +34,7 @@ class DownloadManager extends ChangeNotifier {
 }
 
 class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
-  static final invalidChars = RegExp(r'[\\\/:*?"<>|]');
+  static final invalidChars = RegExp(r'[\\\/:*?"<>|\(\)\&]');
 
   final SharedPreferences _prefs;
 
@@ -128,18 +128,23 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
     final id = nextId;
     final saveDir = settings.downloadPath;
 
-    if (isMerging) {
+    // check ffmpeg
+    if (type == StreamType.audio || isMerging) {
       if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-        final process = await Process.run('ffmpeg', [], runInShell: true);
+        final ffmpegPath = settings.ffmpegPath;
+        final process = await Process.run(ffmpegPath, [], runInShell: true);
         if (!(process.stderr as String).startsWith("ffmpeg version")) {
           showSnackbar(SnackBar(content: Text(localizations.ffmpegNotFound)));
           return;
         }
       }
+    }
+
+    if (isMerging) {
       processMuxedTrack(yt, video, merger!, stream, saveDir, id,
           ffmpegContainer!, settings, localizations);
     } else {
-      processSingleTrack(yt, video, stream, saveDir, id, type, localizations);
+      processSingleTrack(yt, video, stream, saveDir, id, type, settings, localizations);
     }
   }
 
@@ -150,9 +155,14 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       String saveDir,
       int id,
       StreamType type,
+      Settings settings,
       AppLocalizations localizations) async {
     final downloadPath = await getValidPath(
         '${path.join(saveDir, video.title.replaceAll(invalidChars, '_'))}${'.${stream.container.name}'}');
+
+    // for mp3 convertion
+    final downloadPathConvert = await getValidPath(
+        '${path.join(saveDir, video.title.replaceAll(invalidChars, '_'))}${'.mp3'}');
 
     final tempPath = path.join(saveDir, 'Unconfirmed $id.ytdownload');
 
@@ -160,7 +170,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
     final sink = file.openWrite();
     final dataStream = yt.videos.streamsClient.get(stream);
 
-    final downloadVideo = SingleTrack(id, downloadPath, video.title,
+    final downloadVideo = SingleTrack(id, (type == StreamType.audio) ? downloadPathConvert : downloadPath, video.title,
         bytesToString(stream.size.totalBytes), stream.size.totalBytes, type,
         prefs: _prefs);
 
@@ -177,10 +187,35 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       downloadVideo.error = error.toString();
     }, onDone: () async {
       final newPath = await cleanUp(sink, file, downloadPath);
-      downloadVideo.downloadStatus = DownloadStatus.success;
-      downloadVideo.path = newPath!;
+
+      // convert mp3 if audio
+      if (type == StreamType.audio) {
+        final args = [
+          '-i',
+          downloadPath,
+          '-progress',
+          '-',
+          '-y',
+          '-shortest',
+          downloadPathConvert,
+        ];
+        downloadVideo.downloadStatus = DownloadStatus.muxing;
+        if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+          await desktopFFMPEGConvert(downloadVideo, downloadPath, args, video, localizations, settings.ffmpegPath);
+        } else {
+          await mobileFFMPEGConvert(downloadVideo, downloadPath, args, video, localizations);
+        }
+      }
+      else {
+        // other type, close it
+        downloadVideo.downloadStatus = DownloadStatus.success;
+        //downloadVideo.path = newPath!;
+      }
+
+      // allways status download done
       showSnackbar(
           SnackBar(content: Text(localizations.finishDownload(video.title))));
+
     }, cancelOnError: true);
 
     downloadVideo._cancelCallback = () async {
@@ -259,7 +294,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
         ];
         if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
           desktopFFMPEG(muxedTrack, audioTrack, videoTrack, path, args,
-              downloadListener, video, localizations);
+              downloadListener, video, localizations, settings.ffmpegPath);
         } else {
           mobileFFMPEG(muxedTrack, audioTrack, videoTrack, path, args,
               downloadListener, video, localizations);
@@ -285,8 +320,9 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       List<String> args,
       VoidCallback downloadListener,
       QueryVideo video,
-      AppLocalizations localizations) async {
-    final process = await Process.start('ffmpeg', args, runInShell: true);
+      AppLocalizations localizations,
+      String ffmpegPath) async {
+    final process = await Process.start(ffmpegPath, args, runInShell: true);
     process.exitCode.then((exitCode) async {
       //sigterm
       if (exitCode == -1) {
@@ -316,12 +352,22 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
 
       muxedTrack.downloadPerc =
           (ms / video.duration.inMicroseconds * 100).round();
+    }).onError((err, stack) {
+      print("ERRR");
+      print(err);
+      print(stack);
+    });
+
+    process.stderr.listen((event) {
+      final data = utf8.decode(event);
+      debugPrint('ERR: $data');
     });
 
     muxedTrack._cancelCallback = () async {
       audioTrack._cancelCallback!();
       videoTrack._cancelCallback!();
 
+      print("killing now!");
       process.kill();
       muxedTrack.downloadStatus = DownloadStatus.canceled;
       localizations.cancelMerge(video.title);
@@ -403,6 +449,75 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       muxedTrack.downloadStatus = DownloadStatus.canceled;
       localizations.cancelMerge(video.title);
     };
+  }
+
+  Future<void> desktopFFMPEGConvert(
+      SingleTrack downloadVideo,
+      String pathSource,
+      List<String> args,
+      QueryVideo video,
+      AppLocalizations localizations,
+      String ffmpegPath) async {
+    final process = await Process.start(ffmpegPath, args, runInShell: true);
+    process.exitCode.then((exitCode) async {
+      //sigterm
+      if (exitCode == -1) {
+        // finish
+        downloadVideo.downloadStatus = DownloadStatus.failed;
+        return;
+      }
+
+      // delete source
+      await File(pathSource).delete();
+      showSnackbar(SnackBar(content: Text(localizations.finishConvert(video.title))));
+
+      // finish
+      downloadVideo.downloadStatus = DownloadStatus.success;
+      //showSnackbar(SnackBar(content: Text(localizations.finishDownload(video.title))));
+    });
+
+    process.stdout.listen((event) {
+      final data = utf8.decode(event);
+      debugPrint('OUT: $data');
+    }).onError((err, stack) {
+      print("ERRR");
+      print(err);
+      print(stack);
+
+      // finish
+      downloadVideo.downloadStatus = DownloadStatus.failed;
+    });
+
+    process.stderr.listen((event) {
+      final data = utf8.decode(event);
+      debugPrint('ERR: $data');
+    });
+  }
+
+  Future<void> mobileFFMPEGConvert(
+      SingleTrack downloadVideo,
+      String pathSource,
+      List<String> args,
+      QueryVideo video,
+      AppLocalizations localizations) async {
+    final ffmpeg = FlutterFFmpeg();
+    final id = await ffmpeg.executeAsyncWithArguments(args, (execution) async {
+      //TODO: See https://github.com/tanersener/flutter-ffmpeg/issues/286
+      // This never gets called
+
+      //killed
+      if (execution.returnCode == 255) {
+        downloadVideo.downloadStatus = DownloadStatus.failed;
+        return;
+      }
+
+      await File(pathSource).delete();
+      showSnackbar(SnackBar(content: Text(localizations.finishConvert(video.title))));
+
+      // finish
+      downloadVideo.downloadStatus = DownloadStatus.success;
+      //showSnackbar(SnackBar(content: Text(localizations.finishDownload(video.title))));
+    });
   }
 
   SingleTrack processTrack(
