@@ -203,7 +203,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
         if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
           await desktopFFMPEGConvert(downloadVideo, downloadPath, args, video, localizations, settings.ffmpegPath);
         } else {
-          await mobileFFMPEGConvert(downloadVideo, downloadPath, args, video, localizations);
+          await mobileFFMPEGConvert(downloadVideo, downloadPath, downloadPathConvert, args, video, localizations);
         }
       }
       else {
@@ -497,6 +497,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
   Future<void> mobileFFMPEGConvert(
       SingleTrack downloadVideo,
       String pathSource,
+      String pathOutput,
       List<String> args,
       QueryVideo video,
       AppLocalizations localizations) async {
@@ -518,6 +519,46 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       downloadVideo.downloadStatus = DownloadStatus.success;
       //showSnackbar(SnackBar(content: Text(localizations.finishDownload(video.title))));
     });
+
+    final file = File(pathOutput);
+    var oldSize = -1;
+
+    // Currently the ffmpeg's executionCallback is never called so we have to
+    // pool and check if the file is created and written to.
+    Future.doWhile(() async {
+      if (downloadVideo.downloadStatus == DownloadStatus.canceled) {
+        return false;
+      }
+
+      if (!(await file.exists())) {
+        await Future.delayed(const Duration(seconds: 2));
+        return true;
+      }
+      final stat = await file.stat();
+      final size = stat.size;
+      if (oldSize != size) {
+        oldSize = size;
+        await Future.delayed(const Duration(seconds: 2));
+        return true;
+      }
+      return false;
+    }).then((_) async {
+      if (downloadVideo.downloadStatus == DownloadStatus.canceled) {
+        return;
+      }
+
+      await File(pathSource).delete();
+      showSnackbar(SnackBar(content: Text(localizations.finishConvert(video.title))));
+
+      // finish
+      downloadVideo.downloadStatus = DownloadStatus.success;
+    });
+
+    downloadVideo._cancelCallback = () async {
+      ffmpeg.cancelExecution(id);
+      downloadVideo.downloadStatus = DownloadStatus.canceled;
+      showSnackbar(SnackBar(content: Text(localizations.cancelMerge(video.title))));
+    };
   }
 
   SingleTrack processTrack(
