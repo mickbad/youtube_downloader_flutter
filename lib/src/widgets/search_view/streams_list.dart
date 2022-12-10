@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -138,6 +140,12 @@ class StreamsList extends HookConsumerWidget {
       );
     }
 
+    // picture height
+    double pictureHeight = 100;
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      pictureHeight = 200;
+    }
+
     return AlertDialog(
       contentPadding: const EdgeInsets.only(top: 9),
       title: Text(
@@ -155,7 +163,7 @@ class StreamsList extends HookConsumerWidget {
             Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: GestureDetector(
                       onTap: () async {
                         if (!await launchUrlString("https://youtu.be/${video.id}")) {
@@ -163,7 +171,7 @@ class StreamsList extends HookConsumerWidget {
                           // oops nothing
                         }
                       },
-                      child: Image.network(video.thumbnail, height: 150, fit: BoxFit.fitWidth,)
+                      child: Image.network(video.thumbnail, height: pictureHeight, fit: BoxFit.fitWidth,)
                   ),
                 ),
 
@@ -187,7 +195,10 @@ class StreamsList extends HookConsumerWidget {
                     )),
               ],
             ),
-            Text(AppLocalizations.of(context)!.tracksTooltip),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(AppLocalizations.of(context)!.tracksTooltip),
+            ),
 
             // streams
             Expanded(
