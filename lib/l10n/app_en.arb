@@ -6,16 +6,16 @@
 
   "settings": "Settings",
   "darkMode": "Dark Mode",
-  "ffmpegPath": "FFMPEG path localisation",
-  "ffmpegContainer": "ffmpeg container",
+  "ffmpegPath": "Path to FFMPEG's location",
+  "ffmpegContainer": "FFPEG container",
   "ffmpegDescription": "This is the output format when two tracks (audio + video) are merged",
   "ffmpegNotFound": "FFMPEG not found in PATH or not configured",
   "language": "Language",
   "downloadDir": "Download Directory",
   "selectDownloadDir": "Select download directory",
   "invalidDir": "Invalid directory",
-  "credits": "Application credits",
-  "credits_content": "Graphics: https://www.flaticon.com/authors/freepik\nOriginal Author: https://github.com/Hexer10\nModified: https://github.com/mickbad",
+  "credits": "App credits",
+  "credits_content": "Graphics: https://www.flaticon.com/authors/freepik\nOriginal Author: https://github.com/Hexer10\nEdited by: https://github.com/mickbad",
 
   "downloads": "Downloads",
   "author": "Author",
@@ -101,7 +101,7 @@
     }
   },
 
-  "finishConvert": "Convertion finished : {title}",
+  "finishConvert": "Convertion finished: {title}",
   "@finishConvert": {
     "placeholders": {
       "title": {

@@ -1,0 +1,113 @@
+{
+  "title": "YT下载者",
+  "startSearch": "开始搜索或者写到网址！",
+  "searchUrl": "下载网址",
+  "searchUrlTooltip": "从剪贴板粘贴网址",
+
+  "settings": "设定",
+  "darkMode": "神色主题",
+  "ffmpegPath": "FFMPEG路径位置",
+  "ffmpegContainer": "FFMPEG扩展名",
+  "ffmpegDescription": "两条轨（音响+视频）合并后这是输出的格式",
+  "ffmpegNotFound": "FFMPEG在路径没找到，还是FFMPEG不好构成的",
+  "language": "语言",
+  "downloadDir": "下载目录",
+  "selectDownloadDir": "请选择目录",
+  "invalidDir": "目录无效",
+  "credits": "应用的片尾",
+  "credits_content": "图形：https://www.flaticon.com/authors/freepik\n原创作者：https://github.com/Hexer10\n改写：https://github.com/mickbad",
+
+  "downloads": "下载",
+  "author": "创作者",
+  "uploadDateRow": "发表",
+
+  "tracksTooltip": "敲排为下载流程，或者长按排多种流程为合并",
+  "mergeTracks": "下载和合并轨！",
+  "tracksBestMerge": "最硬视频和最硬音响",
+  "tracksAll": "都",
+  "tracksVideoAudio": "视频和音响",
+  "tracksVideo": "之下载视频",
+  "tracksAudio": "只下载音响",
+
+  "permissionError": "应用为下载文件必需储存允准！",
+
+  "startDownload": "{title}的下载开始了",
+  "@startDownload": {
+    "placeholders": {
+      "title": {
+        "example": "世界上集锦视频",
+        "description": "视频的标题"
+      }
+    }
+  },
+
+  "failDownload": "{title}的下载失败了",
+  "@failDownload": {
+    "placeholders": {
+      "title": {
+        "example": "世界上集锦视频",
+        "description": "视频的标题"
+      }
+    }
+  },
+
+  "cancelDownload": "{title}的下载取消了",
+  "@cancelDownload": {
+    "placeholders": {
+      "title": {
+        "example": "世界上集锦视频",
+        "description": "视频的标题"
+      }
+    }
+  },
+
+  "finishDownload": "{title}的下载完了",
+  "@finishDownload": {
+    "placeholders": {
+      "title": {
+        "example": "世界上集锦视频",
+        "description": "视频的标题"
+      }
+    }
+  },
+
+  "startMerge": "{title}的轨在合并",
+  "@startMerge": {
+    "placeholders": {
+      "title": {
+        "example": "世界上集锦视频",
+        "description": "视频的标题"
+      }
+    }
+  },
+
+  "cancelMerge": "{title}的合并取消了",
+  "@cancelMerge": {
+    "placeholders": {
+      "title": {
+        "example": "世界上集锦视频",
+        "description": "视频的标题"
+      }
+    }
+  },
+
+  "finishMerge": "{title}的合并完了",
+  "@finishMerge": {
+    "placeholders": {
+      "title": {
+        "example": "世界上集锦视频",
+        "description": "视频的标题"
+      }
+    }
+  },
+
+  "finishConvert": "{title}的变换完了",
+  "@finishConvert": {
+    "placeholders": {
+      "title": {
+        "example": "世界上集锦视频",
+        "description": "视频的标题"
+      }
+    }
+  }
+}

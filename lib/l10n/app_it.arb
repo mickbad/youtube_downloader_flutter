@@ -1,35 +1,35 @@
 {
   "title": "Youtube Downloader",
-  "startSearch": "Start searching!",
-  "searchUrl": "Download URL",
-  "searchUrlTooltip": "Paste your URL from clipboard",
+  "startSearch": "Inizia a cercare!",
+  "searchUrl": "Download l'URL",
+  "searchUrlTooltip": "Incolla la tua URL dal appunti",
 
   "settings": "Impostazioni",
   "darkMode": "Modalità scura",
-  "ffmpegPath": "FFMPEG path localisation",
-  "ffmpegContainer": "ffmpeg container",
+  "ffmpegPath": "Percorso del FFMPEG",
+  "ffmpegContainer": "FFMPEG estenzione",
   "ffmpegDescription": "Il format di output quando due tracce (audio + video) vengono unite",
   "ffmpegNotFound": "FFMPEG non trovato in PATH o non configurato",
   "language": "Lingua",
   "downloadDir": "Cartella Download",
   "selectDownloadDir": "Selezione la cartella per i download",
   "invalidDir": "Cartella non valida",
-  "credits": "Application credits",
-  "credits_content": "Graphics: https://www.flaticon.com/authors/freepik\nOriginal Author: https://github.com/Hexer10\nModified: https://github.com/mickbad",
+  "credits": "Crediti dell'app",
+  "credits_content": "Graphica: https://www.flaticon.com/authors/freepik\nAutore originale: https://github.com/Hexer10\nA cura di: https://github.com/mickbad",
 
   "permissionError": "L'app necessità del permesso di storage per scaricare i contenuti!",
 
   "downloads": "Downloads",
   "author": "Autore",
-  "uploadDateRow": "Published",
+  "uploadDateRow": "Pubblicato",
 
-  "tracksTooltip": "Tap on line to download stream or long tap to select stream for merge",
-  "mergeTracks": "Download & Merge tracks!",
-  "tracksBestMerge": "Best video + audio quality",
-  "tracksAll": "All",
+  "tracksTooltip": "Tocca sulla linea per download il stream, o premere a lungo per selezionare più stream",
+  "mergeTracks": "Download i Unire le tracce!",
+  "tracksBestMerge": "Il migliore video + qualità dell'audio",
+  "tracksAll": "Tutto",
   "tracksVideoAudio": "Video + Audio",
-  "tracksVideo": "Video Only",
-  "tracksAudio": "Audio Only",
+  "tracksVideo": "Solo il video",
+  "tracksAudio": "Solo il audio",
 
   "startDownload": "Inizio download: {title}",
   "@startDownload": {
@@ -55,8 +55,8 @@
   "@cancelDownload": {
     "placeholders": {
       "title": {
-        "example": "Best video ever",
-        "description": "Video title"
+        "example": "Nuovo video!",
+        "description": "Titolo del video"
       }
     }
   },
@@ -65,8 +65,8 @@
   "@finishDownload": {
     "placeholders": {
       "title": {
-        "example": "Best video ever",
-        "description": "Video title"
+        "example": "Nuovo video!",
+        "description": "Titolo del video"
       }
     }
   },
@@ -75,8 +75,8 @@
   "@startMerge": {
     "placeholders": {
       "title": {
-        "example": "Best video ever",
-        "description": "Video title"
+        "example": "Nuovo video!",
+        "description": "Titolo del video"
       }
     }
   },
@@ -85,8 +85,8 @@
   "@cancelMerge": {
     "placeholders": {
       "title": {
-        "example": "Best video ever",
-        "description": "Video title"
+        "example": "Nuovo video!",
+        "description": "Titolo del video"
       }
     }
   },
@@ -95,18 +95,18 @@
   "@finishMerge": {
     "placeholders": {
       "title": {
-        "example": "Best video ever",
-        "description": "Video title"
+        "example": "Nuovo video!",
+        "description": "Titolo del video"
       }
     }
   },
 
-  "finishConvert": "Convertion finished : {title}",
+  "finishConvert": "Converzione finito: {title}",
   "@finishConvert": {
     "placeholders": {
       "title": {
-        "example": "Best video ever",
-        "description": "Video title"
+        "example": "Nuovo video!",
+        "description": "Titolo del video"
       }
     }
   }

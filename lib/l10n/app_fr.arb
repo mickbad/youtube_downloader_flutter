@@ -7,7 +7,7 @@
   "settings": "Paramètres",
   "darkMode": "Mode nuit",
   "ffmpegPath": "Chemin d'accès à FFMPEG",
-  "ffmpegContainer": "ffmpeg extension",
+  "ffmpegContainer": "FFMPEG extension",
   "ffmpegDescription": "Format de sortie pour fusionner deux pistes (audio + video)",
   "ffmpegNotFound": "FFMPEG introuvable dans le PATH ou non configuré",
   "language": "Langage",
