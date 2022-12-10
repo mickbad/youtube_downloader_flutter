@@ -14,6 +14,8 @@
   "downloadDir": "Local de armazenamento",
   "selectDownloadDir": "Selecione uma pasta para download",
   "invalidDir": "Local de armazenamento inválido",
+  "credits": "Application credits",
+  "credits_content": "Graphics: https://www.flaticon.com/authors/freepik\nOriginal Author: https://github.com/Hexer10\nModified: https://github.com/mickbad",
 
   "downloads": "Downloads",
   "author": "Autor",

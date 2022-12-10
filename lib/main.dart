@@ -96,7 +96,7 @@ class AppInit extends HookConsumerWidget {
     return MaterialApp(
       scaffoldMessengerKey: scaffoldKey,
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const HomePage(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: settings.state.locale,

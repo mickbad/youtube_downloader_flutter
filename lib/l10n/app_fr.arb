@@ -14,12 +14,14 @@
   "downloadDir": "Dossier de téléchargement",
   "selectDownloadDir": "Sélectionnez un dossier de téléchargement",
   "invalidDir": "Dossier invalide",
+  "credits": "Crédits de l'application",
+  "credits_content": "Graphiques : https://www.flaticon.com/authors/freepik\nAuteur original : https://github.com/Hexer10\nModifications : https://github.com/mickbad",
 
   "downloads": "Téléchargements",
   "author": "Auteur",
   "uploadDateRow": "Publication",
 
-  "tracksTooltip": "Tappez sur une ligne pour télécharger ou un appui long pour sélectionner la fusion",
+  "tracksTooltip": "Tapez sur une ligne pour télécharger ou un appui long pour sélectionner la fusion",
   "mergeTracks": "Télécharger et fusionner les pistes !",
   "tracksBestMerge": "Meilleure qualité vidéo et audio",
   "tracksAll": "Tout",

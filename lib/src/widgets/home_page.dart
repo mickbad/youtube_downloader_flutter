@@ -38,74 +38,78 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // logo
-          Center(
-            child: GestureDetector(
-              onLongPress: () async {
-                if (!await launchUrlString("https://www.flaticon.com/free-icon/download_1950083")) {
-                  // throw 'Could not launch $_url';
-                  // oops nothing
-                }
-              },
-              child: Image.asset("assets/images/download.png", height: 256),
-            )
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 50,),
 
-          ),
-          const SizedBox(height: 100.0,),
+            // logo
+            Center(
+              child: GestureDetector(
+                onLongPress: () async {
+                  if (!await launchUrlString("https://www.flaticon.com/free-icon/download_1950083")) {
+                    // throw 'Could not launch $_url';
+                    // oops nothing
+                  }
+                },
+                child: Image.asset("assets/images/download.png", height: 256),
+              )
 
-          Center(child: Text(AppLocalizations.of(context)!.startSearch)),
-          const SizedBox(height: 20.0,),
+            ),
+            const SizedBox(height: 80.0,),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context)!.size.width * .60,
-                child: TextField(
-                  controller: urlController,
-                  onChanged: (value) => url = value,
-                  onSubmitted: (value) async => await launchUrlStream(context),
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: AppLocalizations.of(context)!.searchUrl,
+            Center(child: Text(AppLocalizations.of(context)!.startSearch)),
+            const SizedBox(height: 20.0,),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context)!.size.width * .60,
+                  child: TextField(
+                    controller: urlController,
+                    onChanged: (value) => url = value,
+                    onSubmitted: (value) async => await launchUrlStream(context),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: AppLocalizations.of(context)!.searchUrl,
+                    ),
                   ),
                 ),
-              ),
 
-              Container(
-                width: 50,
-                height: 50,
-                color: Colors.white70,
-                child: IconButton(
-                  icon: const Icon(Icons.paste, size: 30, color: Colors.black45,),
-                  tooltip: AppLocalizations.of(context)!.searchUrlTooltip,
-                  onPressed: () async {
-                    // get clipboard
-                    ClipboardData? cdata = await Clipboard.getData(Clipboard.kTextPlain);
-                    if (cdata != null && cdata.text != null && (cdata.text!.toLowerCase().startsWith("https://www.youtube.com") || cdata.text!.toLowerCase().startsWith("https://youtu.be"))) {
-                      urlController.text = url = cdata.text ?? "";
-                      await launchUrlStream(context);
-                    }
-                    else {
-                      urlController.text = "Not valid!";
-                      url = "";
-                    }
-                  },
-                ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-              onPressed: () async => await launchUrlStream(context),
-              child: (loadingStreams) ? const CircularProgressIndicator() : Text(AppLocalizations.of(context)!.searchUrl),
+                Container(
+                  width: 50,
+                  height: 50,
+                  color: Colors.white70,
+                  child: IconButton(
+                    icon: const Icon(Icons.paste, size: 30, color: Colors.black45,),
+                    tooltip: AppLocalizations.of(context)!.searchUrlTooltip,
+                    onPressed: () async {
+                      // get clipboard
+                      ClipboardData? cdata = await Clipboard.getData(Clipboard.kTextPlain);
+                      if (cdata != null && cdata.text != null && (cdata.text!.toLowerCase().startsWith("https://www.youtube.com") || cdata.text!.toLowerCase().startsWith("https://youtu.be"))) {
+                        urlController.text = url = cdata.text ?? "";
+                        await launchUrlStream(context);
+                      }
+                      else {
+                        urlController.text = "Not valid!";
+                        url = "";
+                      }
+                    },
+                  ),
+                )
+              ],
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextButton(
+                onPressed: () async => await launchUrlStream(context),
+                child: (loadingStreams) ? const CircularProgressIndicator() : Text(AppLocalizations.of(context)!.searchUrl),
+              ),
+            ),
+          ],
+        ),
       ),
       drawer: const AppDrawer(),
       appBar: const PreferredSize(

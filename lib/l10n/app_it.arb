@@ -14,6 +14,8 @@
   "downloadDir": "Cartella Download",
   "selectDownloadDir": "Selezione la cartella per i download",
   "invalidDir": "Cartella non valida",
+  "credits": "Application credits",
+  "credits_content": "Graphics: https://www.flaticon.com/authors/freepik\nOriginal Author: https://github.com/Hexer10\nModified: https://github.com/mickbad",
 
   "permissionError": "L'app necessità del permesso di storage per scaricare i contenuti!",
 

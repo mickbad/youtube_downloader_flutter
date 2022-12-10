@@ -112,6 +112,13 @@ class SettingsPage extends HookConsumerWidget {
               items: locales,
             ),
           ),
+          const Divider(
+            height: 0,
+          ),
+          ListTile(
+            title: Text(intl.credits),
+            subtitle: Text(intl.credits_content),
+          ),
         ],
       ),
     );

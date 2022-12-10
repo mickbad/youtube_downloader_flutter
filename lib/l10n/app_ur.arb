@@ -12,6 +12,8 @@
   "downloadDir": "ڈائریکٹری ڈاؤن لوڈ",
   "selectDownloadDir": "ڈاؤن لوڈ ڈائریکٹری منتخب کریں۔",
   "invalidDir": "غلط ڈائریکٹری",
+  "credits": "Application credits",
+  "credits_content": "Graphics: https://www.flaticon.com/authors/freepik\nOriginal Author: https://github.com/Hexer10\nModified: https://github.com/mickbad",
 
   "downloads": "ڈاؤن لوڈز",
   "author": "مصنف",
