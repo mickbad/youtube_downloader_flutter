@@ -19,6 +19,9 @@ class StreamsList extends HookConsumerWidget {
 
   final mergeTracks = StreamMerge();
 
+  // set true if a merge stream is wanted and don't close window when we click on a stream
+  bool isMergeWanted = false;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final yt = ref.watch(ytProvider);
@@ -55,6 +58,11 @@ class StreamsList extends HookConsumerWidget {
             downloadManager.state.downloadStream(yt, video, settings.state,
                 StreamType.video, AppLocalizations.of(context)!,
                 singleStream: stream);
+
+            // close window
+            if (!isMergeWanted) {
+              Navigator.of(context).pop();
+            }
           },
           child: ListTile(
             subtitle: Text(
@@ -75,11 +83,17 @@ class StreamsList extends HookConsumerWidget {
         widgetStream = MaterialButton(
           onLongPress: () {
             merger.video = stream;
+            isMergeWanted = true;
           },
           onPressed: () {
             downloadManager.state.downloadStream(yt, video, settings.state,
                 StreamType.video, AppLocalizations.of(context)!,
                 singleStream: stream);
+
+            // close window
+            if (!isMergeWanted) {
+              Navigator.of(context).pop();
+            }
           },
           child: ListTile(
             subtitle: Text(
@@ -101,11 +115,19 @@ class StreamsList extends HookConsumerWidget {
         widgetStream = MaterialButton(
           onLongPress: () {
             merger.audio = stream;
+            isMergeWanted = true;
           },
           onPressed: () {
             downloadManager.state.downloadStream(yt, video, settings.state,
                 StreamType.audio, AppLocalizations.of(context)!,
                 singleStream: stream);
+
+
+            // close window
+            if (!isMergeWanted) {
+              Navigator.of(context).pop();
+            }
+
           },
           child: ListTile(
             subtitle: Text(
@@ -129,6 +151,7 @@ class StreamsList extends HookConsumerWidget {
             onPressed: () {
               merger.video = streamBestVideo;
               merger.audio = streamBestAudio;
+              isMergeWanted = true;
             },
             child: ListTile(
               subtitle: Text(
@@ -240,6 +263,7 @@ class StreamsList extends HookConsumerWidget {
                 downloadManager.state.downloadStream(yt, video, settings.state,
                     StreamType.video, AppLocalizations.of(context)!,
                     merger: merger, ffmpegContainer: settings.state.ffmpegContainer);
+                Navigator.of(context).pop();
               },
               child: Text(AppLocalizations.of(context)!.mergeTracks)),
         DropdownButton<Filter>(
