@@ -26,7 +26,7 @@
   "tracksBestMerge": "最硬視頻和最硬音響",
   "tracksAll": "都",
   "tracksVideoAudio": "視頻和音響",
-  "tracksVideo": "之下載視頻",
+  "tracksVideo": "只下載視頻",
   "tracksAudio": "只下載音響",
 
   "permissionError": "應用為下載文件必需儲存允准！",
