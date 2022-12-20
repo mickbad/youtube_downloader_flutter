@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -201,7 +202,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
         ];
         downloadVideo.downloadStatus = DownloadStatus.muxing;
         if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
-          await desktopFFMPEGConvert(downloadVideo, downloadPath, args, video, localizations, settings.ffmpegPath);
+          await desktopFFMPEGConvert(downloadVideo, downloadPath, downloadPathConvert, args, video, localizations, settings.ffmpegPath);
         } else {
           await mobileFFMPEGConvert(downloadVideo, downloadPath, downloadPathConvert, args, video, localizations);
         }
@@ -454,6 +455,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
   Future<void> desktopFFMPEGConvert(
       SingleTrack downloadVideo,
       String pathSource,
+      String pathOutput,
       List<String> args,
       QueryVideo video,
       AppLocalizations localizations,
@@ -474,6 +476,9 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       // finish
       downloadVideo.downloadStatus = DownloadStatus.success;
       //showSnackbar(SnackBar(content: Text(localizations.finishDownload(video.title))));
+
+      // insert id3Tag if necessary
+      await video.setId3Tag(pathOutput);
     });
 
     process.stdout.listen((event) {
@@ -518,6 +523,9 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       // finish
       downloadVideo.downloadStatus = DownloadStatus.success;
       //showSnackbar(SnackBar(content: Text(localizations.finishDownload(video.title))));
+
+      // insert id3Tag if necessary
+      await video.setId3Tag(pathOutput);
     });
 
     final file = File(pathOutput);
