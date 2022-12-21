@@ -124,16 +124,37 @@ class _HomePageState extends State<HomePage> {
 
     try {
       final YoutubeExplode yt = YoutubeExplode();
-      final videoYT = await yt.videos.get(url);
-      final QueryVideo video = QueryVideo(
-          videoYT.title,
-          videoYT.id.toString(),
-          videoYT.author,
-          videoYT.duration!,
-          videoYT.thumbnails.highResUrl,
-          videoYT.uploadDate,
-          videoYT.uploadDateRaw);
-      showDialog(context: context, builder: (context) => StreamsList(video));
+
+      // check if url is a youtube list stream
+      if (url.toLowerCase().contains("list=")) {
+        // Get playlist metadata.
+        var playlist = await yt.playlists.get(url);
+
+        var title = playlist.title;
+        var author = playlist.author;
+        // print("+ ${playlist.id}: $author - $title: ${playlist.videoCount} videos");
+
+        await for (var video in yt.playlists.getVideos(playlist.id)) {
+          var videoTitle = video.title;
+          var videoAuthor = video.author;
+          print("- $videoAuthor - $videoTitle");
+        }
+
+        urlController.text = "Playlist not available yet!";
+        url = "";
+      }
+      else {
+        final videoYT = await yt.videos.get(url);
+        final QueryVideo video = QueryVideo(
+            videoYT.title,
+            videoYT.id.toString(),
+            videoYT.author,
+            videoYT.duration!,
+            videoYT.thumbnails.highResUrl,
+            videoYT.uploadDate,
+            videoYT.uploadDateRaw);
+        showDialog(context: context, builder: (context) => StreamsList(video));
+      }
     } catch (e) {
       urlController.text = "Not valid!";
       url = "";
