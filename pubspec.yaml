@@ -30,13 +30,13 @@ dependencies:
   collection: ^1.15.0
   json_annotation: ^4.7.0
   intl: ^0.17.0
-  flutter_ffmpeg: ^0.4.2
   permission_handler: ^10.2.0
   open_file: ^3.2.1
   file_picker: ^4.0.0
   url_launcher: ^6.1.7
   id3_codec: ^1.0.0
   http: ^0.13.5
+  ffmpeg_kit_flutter_full: ^5.1.0-LTS
 
 dev_dependencies:
   build_runner: ^2.1.1

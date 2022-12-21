@@ -2,10 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ffmpeg_kit_flutter_full/ffmpeg_session.dart';
+import 'package:ffmpeg_kit_flutter_full/return_code.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
+import 'package:ffmpeg_kit_flutter_full/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_full/log.dart';
+import 'package:ffmpeg_kit_flutter_full/session.dart';
+import 'package:ffmpeg_kit_flutter_full/statistics.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:path/path.dart' as path;
@@ -35,7 +40,7 @@ class DownloadManager extends ChangeNotifier {
 }
 
 class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
-  static final invalidChars = RegExp(r'[\\\/:*?"<>|\(\)\&]');
+  static final invalidChars = RegExp(r'[\\\/:*?"<>|\(\)\&#]');
 
   final SharedPreferences _prefs;
 
@@ -384,72 +389,55 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       VoidCallback downloadListener,
       QueryVideo video,
       AppLocalizations localizations) async {
-    final ffmpeg = FlutterFFmpeg();
-    final id = await ffmpeg.executeAsyncWithArguments(args, (execution) async {
-      //TODO: See https://github.com/tanersener/flutter-ffmpeg/issues/286
-      // This never gets called
+    // execute ffmpeg-mobile
+    FFmpegSession session = await FFmpegKit.executeWithArgumentsAsync(args, (Session session) async {
+      // when session is executed
+      final returnCode = await session.getReturnCode();
+      if (ReturnCode.isSuccess(returnCode)) {
+        // it's ok
+        muxedTrack.downloadStatus = DownloadStatus.success;
 
-      //killed
-      if (execution.returnCode == 255) {
-        return;
-      }
-      muxedTrack.downloadStatus = DownloadStatus.success;
+        audioTrack.removeListener(downloadListener);
+        videoTrack.removeListener(downloadListener);
 
-      audioTrack.removeListener(downloadListener);
-      videoTrack.removeListener(downloadListener);
+        await File(audioTrack.path).delete();
+        await File(videoTrack.path).delete();
 
-      await File(audioTrack.path).delete();
-      await File(videoTrack.path).delete();
+        // finish
+        showSnackbar(SnackBar(content: Text(localizations.finishMerge(video.title))));
 
-      localizations.finishMerge(video.title);
-    });
+      } else if (ReturnCode.isCancel(returnCode)) {
+        // cancel merge
+        muxedTrack.downloadStatus = DownloadStatus.canceled;
+        showSnackbar(SnackBar(content: Text(localizations.cancelMerge(video.title))));
 
-    final file = File(outPath);
-    var oldSize = -1;
+      } else {
+        // cancel merge
+        muxedTrack.downloadStatus = DownloadStatus.canceled;
+        showSnackbar(SnackBar(content: Text(localizations.cancelMerge(video.title))));
 
-    // Currently the ffmpeg's executionCallback is never called so we have to
-    // pool and check if the file is created and written to.
-    Future.doWhile(() async {
-      if (muxedTrack.downloadStatus == DownloadStatus.canceled) {
-        return false;
-      }
-
-      if (!(await file.exists())) {
-        await Future.delayed(const Duration(seconds: 2));
-        return true;
-      }
-      final stat = await file.stat();
-      final size = stat.size;
-      if (oldSize != size) {
-        oldSize = size;
-        await Future.delayed(const Duration(seconds: 2));
-        return true;
-      }
-      return false;
-    }).then((_) async {
-      if (muxedTrack.downloadStatus == DownloadStatus.canceled) {
-        return;
       }
 
-      muxedTrack.downloadStatus = DownloadStatus.success;
+    }, (Log log) {
+      // get logs during session
+      print("log: ${log.getMessage()}");
 
-      audioTrack.removeListener(downloadListener);
-      videoTrack.removeListener(downloadListener);
+    }, (Statistics stats) {
+      // generate stats
+      // print("stats: ${stats.toString()}");
+      // print("stats: ${stats.getSize()}");
 
-      await File(audioTrack.path).delete();
-      await File(videoTrack.path).delete();
-
-      localizations.finishMerge(video.title);
     });
 
     muxedTrack._cancelCallback = () async {
       audioTrack._cancelCallback!();
       videoTrack._cancelCallback!();
 
-      ffmpeg.cancelExecution(id);
+      await FFmpegKit.cancel(session.getSessionId());
       muxedTrack.downloadStatus = DownloadStatus.canceled;
-      localizations.cancelMerge(video.title);
+      showSnackbar(SnackBar(content: Text(localizations.cancelMerge(video.title))));
     };
+
   }
 
   Future<void> desktopFFMPEGConvert(
@@ -506,67 +494,45 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       List<String> args,
       QueryVideo video,
       AppLocalizations localizations) async {
-    final ffmpeg = FlutterFFmpeg();
-    final id = await ffmpeg.executeAsyncWithArguments(args, (execution) async {
-      //TODO: See https://github.com/tanersener/flutter-ffmpeg/issues/286
-      // This never gets called
+    // execute ffmpeg-mobile
+    FFmpegKit.executeWithArgumentsAsync(args, (Session session) async {
+      // when session is executed
+      final returnCode = await session.getReturnCode();
+      if (ReturnCode.isSuccess(returnCode)) {
+        // it's ok
+        // insert id3Tag if necessary
+        await video.setId3Tag(pathOutput);
 
-      //killed
-      if (execution.returnCode == 255) {
-        downloadVideo.downloadStatus = DownloadStatus.failed;
-        return;
+        // finish
+        showSnackbar(SnackBar(content: Text(localizations.finishConvert(video.title))));
+        downloadVideo.downloadStatus = DownloadStatus.success;
+
+      } else if (ReturnCode.isCancel(returnCode)) {
+        // cancel merge
+        downloadVideo.downloadStatus = DownloadStatus.canceled;
+        showSnackbar(SnackBar(content: Text(localizations.cancelMerge(video.title))));
+
+      } else {
+        // cancel merge
+        downloadVideo.downloadStatus = DownloadStatus.canceled;
+        showSnackbar(SnackBar(content: Text(localizations.cancelMerge(video.title))));
+
       }
 
+      // remove source file (mp4, ...)
       await File(pathSource).delete();
-      showSnackbar(SnackBar(content: Text(localizations.finishConvert(video.title))));
 
-      // finish
-      downloadVideo.downloadStatus = DownloadStatus.success;
-      //showSnackbar(SnackBar(content: Text(localizations.finishDownload(video.title))));
+    }, (Log log) {
+      // get logs during session
+      print("log: ${log.getMessage()}");
 
-      // insert id3Tag if necessary
-      await video.setId3Tag(pathOutput);
+    }, (Statistics stats) {
+      // generate stats
+      // print("stats: ${stats.toString()}");
+      // print("stats: ${stats.getSize()}");
+
     });
 
-    final file = File(pathOutput);
-    var oldSize = -1;
-
-    // Currently the ffmpeg's executionCallback is never called so we have to
-    // pool and check if the file is created and written to.
-    Future.doWhile(() async {
-      if (downloadVideo.downloadStatus == DownloadStatus.canceled) {
-        return false;
-      }
-
-      if (!(await file.exists())) {
-        await Future.delayed(const Duration(seconds: 2));
-        return true;
-      }
-      final stat = await file.stat();
-      final size = stat.size;
-      if (oldSize != size) {
-        oldSize = size;
-        await Future.delayed(const Duration(seconds: 2));
-        return true;
-      }
-      return false;
-    }).then((_) async {
-      if (downloadVideo.downloadStatus == DownloadStatus.canceled) {
-        return;
-      }
-
-      await File(pathSource).delete();
-      showSnackbar(SnackBar(content: Text(localizations.finishConvert(video.title))));
-
-      // finish
-      downloadVideo.downloadStatus = DownloadStatus.success;
-    });
-
-    downloadVideo._cancelCallback = () async {
-      ffmpeg.cancelExecution(id);
-      downloadVideo.downloadStatus = DownloadStatus.canceled;
-      showSnackbar(SnackBar(content: Text(localizations.cancelMerge(video.title))));
-    };
   }
 
   SingleTrack processTrack(
