@@ -136,7 +136,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
 
     // check ffmpeg
     if (type == StreamType.audio || isMerging) {
-      if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      if (Platform.isWindows || Platform.isLinux) {
         final ffmpegPath = settings.ffmpegPath;
         final process = await Process.run(ffmpegPath, [], runInShell: true);
         if (!(process.stderr as String).startsWith("ffmpeg version")) {
@@ -206,7 +206,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
           downloadPathConvert,
         ];
         downloadVideo.downloadStatus = DownloadStatus.muxing;
-        if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+        if (Platform.isWindows || Platform.isLinux) {
           await desktopFFMPEGConvert(downloadVideo, downloadPath, downloadPathConvert, args, video, localizations, settings.ffmpegPath);
         } else {
           await mobileFFMPEGConvert(downloadVideo, downloadPath, downloadPathConvert, args, video, localizations);
@@ -298,7 +298,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
           '-shortest',
           path,
         ];
-        if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+        if (Platform.isWindows || Platform.isLinux) {
           desktopFFMPEG(muxedTrack, audioTrack, videoTrack, path, args,
               downloadListener, video, localizations, settings.ffmpegPath);
         } else {

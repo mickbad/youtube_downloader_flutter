@@ -28,6 +28,33 @@ class SettingsPage extends HookConsumerWidget {
     final intl = AppLocalizations.of(context)!;
     final settings = ref.watch(settingsProvider.state);
 
+    // ffmpeg path directory if windows/linux
+    Widget ffmpeg_locator_settings = Container();
+    if (Platform.isWindows || Platform.isLinux) {
+      ffmpeg_locator_settings = ListTile(
+        title: Text(intl.ffmpegPath),
+        subtitle: Text(settings.state.ffmpegPath),
+        onTap: () async {
+          final result = await FilePicker.platform
+              .pickFiles(dialogTitle: 'Choose FFMPEG localisation');
+          if (result?.files.single.path?.isEmpty ?? true) {
+            return;
+          }
+
+          // check if ffmpeg ready
+          final ffmpegPath = result?.files.single.path ?? "nothing";
+          final process = await Process.run(ffmpegPath, [], runInShell: true);
+          if (!(process.stderr as String).startsWith("ffmpeg version")) {
+            showSnackbar(SnackBar(content: Text(intl.ffmpegNotFound)));
+            return;
+          }
+
+          // save
+          settings.state = settings.state.copyWith(ffmpegPath: ffmpegPath);
+        },
+      );
+    }
+
     return Scaffold(
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
@@ -65,28 +92,9 @@ class SettingsPage extends HookConsumerWidget {
           const Divider(
             height: 0,
           ),
-          ListTile(
-            title: Text(intl.ffmpegPath),
-            subtitle: Text(settings.state.ffmpegPath),
-            onTap: () async {
-              final result = await FilePicker.platform
-                  .pickFiles(dialogTitle: 'Choose FFMPEG localisation');
-              if (result?.files.single.path?.isEmpty ?? true) {
-                return;
-              }
 
-              // check if ffmpeg ready
-              final ffmpegPath = result?.files.single.path ?? "nothing";
-              final process = await Process.run(ffmpegPath, [], runInShell: true);
-              if (!(process.stderr as String).startsWith("ffmpeg version")) {
-                showSnackbar(SnackBar(content: Text(intl.ffmpegNotFound)));
-                return;
-              }
+          ffmpeg_locator_settings,
 
-              // save
-              settings.state = settings.state.copyWith(ffmpegPath: ffmpegPath);
-            },
-          ),
           const Divider(
             height: 0,
           ),
