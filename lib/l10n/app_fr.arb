@@ -29,6 +29,13 @@
   "tracksVideo": "Vidéo seulement",
   "tracksAudio": "Audio seulement",
 
+  "trackID3EditTooltip": "Mettre à jour les tags ID3",
+  "trackID3Tooltip": "Modifiez les informations du mp3",
+  "trackID3FieldTitle": "Titre",
+  "trackID3FieldArtist": "Auteur",
+  "trackID3FieldAlbum": "Album",
+  "trackID3Action": "Appliquez",
+
   "permissionError": "L'application a besoin des permissions de stockage pour télécharger les fichiers !",
 
   "startDownload": "Démarrage du téléchargement : {title}",

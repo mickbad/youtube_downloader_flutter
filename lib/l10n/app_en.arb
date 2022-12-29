@@ -29,6 +29,13 @@
   "tracksVideo": "Video Only",
   "tracksAudio": "Audio Only",
 
+  "trackID3EditTooltip": "Update mp3 ID3",
+  "trackID3Tooltip": "Update mp3 informations",
+  "trackID3FieldTitle": "Title",
+  "trackID3FieldArtist": "Author / Artist",
+  "trackID3FieldAlbum": "Album",
+  "trackID3Action": "Update",
+
   "permissionError": "The app needs the storage permission to download files!",
 
   "startDownload": "Started downloading: {title}",

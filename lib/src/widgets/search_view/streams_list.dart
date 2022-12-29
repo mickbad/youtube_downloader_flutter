@@ -44,8 +44,8 @@ class StreamsList extends HookConsumerWidget {
 
     // search best video
     List<Widget> filteredListWidget = [];
-    var streamBestVideo = null;
-    var streamBestAudio = null;
+    VideoOnlyStreamInfo? streamBestVideo;
+    AudioOnlyStreamInfo? streamBestAudio;
 
     // list of stream widget
     for(var stream in filteredList) {

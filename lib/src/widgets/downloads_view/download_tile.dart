@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path/path.dart' as path;
 import 'package:youtube_downloader/src/models/download_manager.dart';
+import 'package:youtube_downloader/src/models/query_video.dart';
 import 'package:youtube_downloader/src/providers.dart';
+import 'package:youtube_downloader/src/widgets/downloads_view/download_id3tag.dart';
 
 class DownloadTile extends HookWidget {
   final SingleTrack video;
@@ -105,9 +108,25 @@ class TrailingIcon extends HookConsumerWidget {
               video.cancelDownload();
             });
       case DownloadStatus.success:
-        return Row(
+          // change id3tag for mp3
+          Widget id3tagChange = Container();
+          if (video.streamType == StreamType.audio && video.path.toLowerCase().endsWith('.mp3')) {
+            id3tagChange =  IconButton(
+              icon: const Icon(Icons.edit),
+              tooltip: AppLocalizations.of(context)!.trackID3EditTooltip,
+              onPressed: () async {
+                // get id3tag
+                QueryVideo? myvideo = await QueryVideo.getId3Tag(video.path);
+                if (myvideo != null) {
+                  showDialog(context: context, builder: (context) => DownloadId3Tag(myvideo));
+                }
+              });
+          }
+
+          return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            id3tagChange,
             IconButton(
                 icon: const Icon(Icons.folder_open),
                 onPressed: () async {

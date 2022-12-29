@@ -49,8 +49,8 @@ class LandscapeSearch extends HookWidget {
 
     return Scrollbar(
       controller: controller,
-      showTrackOnHover: false,
-      isAlwaysShown: true,
+      //showTrackOnHover: false,
+      thumbVisibility: true,
       child: GridView.builder(
         controller: controller,
         padding: const EdgeInsets.all(10),
