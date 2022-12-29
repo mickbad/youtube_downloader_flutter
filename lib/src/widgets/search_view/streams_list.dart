@@ -164,7 +164,7 @@ class StreamsList extends HookConsumerWidget {
     }
 
     // picture height
-    double pictureHeight = 100;
+    double pictureHeight = 70;
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       pictureHeight = 200;
     }

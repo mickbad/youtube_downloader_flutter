@@ -26,6 +26,7 @@ class DownloadId3Tag extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       contentPadding: const EdgeInsets.only(top: 9),
+      scrollable: true,
       title: Text(
         basename(video.path!),
         overflow: TextOverflow.ellipsis,
@@ -43,47 +44,45 @@ class DownloadId3Tag extends HookConsumerWidget {
             ),
 
             // streams
-            Expanded(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                    child: TextField(
-                      controller: titleController,
-                      onChanged: (value) => title = value,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: AppLocalizations.of(context)!.trackID3FieldTitle,
-                      ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  child: TextField(
+                    controller: titleController,
+                    onChanged: (value) => title = value,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: AppLocalizations.of(context)!.trackID3FieldTitle,
                     ),
                   ),
+                ),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                    child: TextField(
-                      controller: artistController,
-                      onChanged: (value) => artist = value,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: AppLocalizations.of(context)!.trackID3FieldArtist,
-                      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  child: TextField(
+                    controller: artistController,
+                    onChanged: (value) => artist = value,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: AppLocalizations.of(context)!.trackID3FieldArtist,
                     ),
                   ),
+                ),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                    child: TextField(
-                      controller: albumController,
-                      onChanged: (value) => album = value,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: AppLocalizations.of(context)!.trackID3FieldAlbum,
-                      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  child: TextField(
+                    controller: albumController,
+                    onChanged: (value) => album = value,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: AppLocalizations.of(context)!.trackID3FieldAlbum,
                     ),
                   ),
+                ),
 
-                ],
-              ),
+              ],
             ),
           ],
         ),
@@ -112,6 +111,7 @@ class DownloadId3Tag extends HookConsumerWidget {
               padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20))
             ),
             onPressed: () async {
+              Navigator.of(context).pop();
               if (video.path != null) {
                 video.title = title;
                 video.author = artist;
@@ -119,7 +119,6 @@ class DownloadId3Tag extends HookConsumerWidget {
 
                 await video.setId3Tag(video.path!);
               }
-              Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.trackID3Action)),
       ],
