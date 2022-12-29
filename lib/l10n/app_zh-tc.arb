@@ -29,6 +29,13 @@
   "tracksVideo": "只下載視頻",
   "tracksAudio": "只下載音響",
 
+  "trackID3EditTooltip": "更新ID3標記",
+  "trackID3Tooltip": "更新MP3的信息存儲",
+  "trackID3FieldTitle": "曲名",
+  "trackID3FieldArtist": "演唱者",
+  "trackID3FieldAlbum": "專輯",
+  "trackID3Action": "儲存",
+
   "permissionError": "應用為下載文件必需儲存允准！",
 
   "startDownload": "{title}的下載開始了",

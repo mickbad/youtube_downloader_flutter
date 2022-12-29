@@ -31,6 +31,13 @@
   "tracksVideo": "Solo il video",
   "tracksAudio": "Solo il audio",
 
+  "trackID3EditTooltip": "Aggiorna le tag ID3",
+  "trackID3Tooltip": "Cambia le informazioni dell'MP3",
+  "trackID3FieldTitle": "Titolo",
+  "trackID3FieldArtist": "Autore",
+  "trackID3FieldAlbum": "Album",
+  "trackID3Action": "Salva",
+
   "startDownload": "Inizio download: {title}",
   "@startDownload": {
     "placeholders": {
