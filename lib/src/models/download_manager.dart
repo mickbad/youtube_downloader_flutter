@@ -2,15 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:ffmpeg_kit_flutter_full/ffmpeg_session.dart';
-import 'package:ffmpeg_kit_flutter_full/return_code.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_session.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ffmpeg_kit_flutter_full/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_full/log.dart';
-import 'package:ffmpeg_kit_flutter_full/session.dart';
-import 'package:ffmpeg_kit_flutter_full/statistics.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/log.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/session.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/statistics.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:path/path.dart' as path;
@@ -40,7 +40,7 @@ class DownloadManager extends ChangeNotifier {
 }
 
 class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
-  static final invalidChars = RegExp(r'[\\\/:*?"<>|\(\)\&#]');
+  static final invalidChars = RegExp(r'''[\\\/:;=+*?"'<>|\(\)\&#]''');
 
   final SharedPreferences _prefs;
 
@@ -289,9 +289,11 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
 
         final args = [
           '-i',
-          audioTrack.path,
-          '-i',
           videoTrack.path,
+          '-i',
+          audioTrack.path,
+          '-c:v',
+          'h264',
           '-progress',
           '-',
           '-y',
@@ -424,7 +426,8 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
 
     }, (Statistics stats) {
       // generate stats
-      // print("stats: ${stats.toString()}");
+      muxedTrack.downloadPerc = (stats.getTime() * 1000 / video.duration.inMicroseconds * 100).round();
+      // print("stats: ${stats.getTime()}");
       // print("stats: ${stats.getSize()}");
 
     });

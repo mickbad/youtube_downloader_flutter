@@ -1,10 +1,10 @@
 PODS:
-  - ffmpeg-kit-macos-full (5.1)
-  - ffmpeg_kit_flutter_full (5.1.0):
-    - ffmpeg_kit_flutter_full/full (= 5.1.0)
+  - ffmpeg-kit-macos-full-gpl (5.1)
+  - ffmpeg_kit_flutter_full_gpl (5.1.0):
+    - ffmpeg_kit_flutter_full_gpl/full-gpl (= 5.1.0)
     - FlutterMacOS
-  - ffmpeg_kit_flutter_full/full (5.1.0):
-    - ffmpeg-kit-macos-full (= 5.1)
+  - ffmpeg_kit_flutter_full_gpl/full-gpl (5.1.0):
+    - ffmpeg-kit-macos-full-gpl (= 5.1)
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - path_provider_macos (0.0.1):
@@ -17,7 +17,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
-  - ffmpeg_kit_flutter_full (from `Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_full/macos`)
+  - ffmpeg_kit_flutter_full_gpl (from `Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_full_gpl/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
   - shared_preferences_macos (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos`)
@@ -26,11 +26,11 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - ffmpeg-kit-macos-full
+    - ffmpeg-kit-macos-full-gpl
 
 EXTERNAL SOURCES:
-  ffmpeg_kit_flutter_full:
-    :path: Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_full/macos
+  ffmpeg_kit_flutter_full_gpl:
+    :path: Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_full_gpl/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   path_provider_macos:
@@ -43,8 +43,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/window_size/macos
 
 SPEC CHECKSUMS:
-  ffmpeg-kit-macos-full: c292021070be5472e9c855bd59bd44fa75352c84
-  ffmpeg_kit_flutter_full: 00b20a8422e77910bd7e828adfc22bd741b5126e
+  ffmpeg-kit-macos-full-gpl: 13b2ae9d0189535dd4566a73354ff62624a723e9
+  ffmpeg_kit_flutter_full_gpl: 4692cad8285a8ce169bc19535b12374fd0407d80
   FlutterMacOS: ae6af50a8ea7d6103d888583d46bd8328a7e9811
   path_provider_macos: 3c0c3b4b0d4a76d2bf989a913c2de869c5641a19
   shared_preferences_macos: a64dc611287ed6cbe28fd1297898db1336975727

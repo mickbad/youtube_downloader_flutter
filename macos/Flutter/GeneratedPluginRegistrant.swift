@@ -5,7 +5,7 @@
 import FlutterMacOS
 import Foundation
 
-import ffmpeg_kit_flutter_full
+import ffmpeg_kit_flutter_full_gpl
 import path_provider_macos
 import shared_preferences_macos
 import url_launcher_macos
