@@ -112,7 +112,9 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
                 onPressed: () async => await launchUrlStream(context),
-                child: (loadingStreams) ? ((percentLoading < 0.0 || percentLoading >= 100.0) ? const CircularProgressIndicator() : Text('$percentLoading%')) : Text(AppLocalizations.of(context)!.searchUrl),
+                child: (loadingStreams)
+                    ? ((percentLoading < 0.0 || percentLoading >= 100.0) ? const CircularProgressIndicator() : Text(AppLocalizations.of(context)!.playlistParsing(percentLoading)))
+                    : Text(AppLocalizations.of(context)!.searchUrl),
               ),
             ),
           ],

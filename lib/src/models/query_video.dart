@@ -102,7 +102,7 @@ class QueryVideo {
 ///
 /// QueryListVideos: struct for stock all queryvideo from a list
 ///
-/// sample: https://www.youtube.com/watch?v=wgf1ug5lFno&list=PLhbtuUXoyjYcFpD6A1SIiYyJJZ8TpB1oL
+/// sample: https://www.youtube.com/watch?v=x81hFfubG5I&list=PLpllqzgq8wPYK_L_LH6GqiwVW66iXnmVt
 ///
 class QueryListVideos {
   late String title;

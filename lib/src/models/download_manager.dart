@@ -153,7 +153,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
     // waiting queue free
     while(true) {
       // get video downloading count
-      if (countProcessing < 2) {
+      if (countProcessing < settings.downloadQuota) {
         // we can download
         break;
       }

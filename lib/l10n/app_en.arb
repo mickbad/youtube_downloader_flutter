@@ -1,6 +1,6 @@
 {
   "title": "Youtube Downloader",
-  "startSearch": "Start searching or put your URL!",
+  "startSearch": "Put your video or playlist URL!",
   "searchUrl": "Download URL",
   "searchUrlTooltip": "Paste your URL from clipboard",
 
@@ -36,8 +36,17 @@
   "trackID3FieldAlbum": "Album",
   "trackID3Action": "Update",
 
+  "playlistParsing": "Playlist parsing: {percent}%",
+  "@playlistParsing": {
+    "placeholders": {
+      "percent": {
+        "example": "29",
+        "description": "Scan percent"
+      }
+    }
+  },
   "playlistTooltip": "Tap on line to select or deselect video to download",
-  "playlistTitle": "{count} videos or audio to download",
+  "playlistTitle": "{count} videos or audios to download",
   "@playlistTitle": {
     "placeholders": {
       "count": {
@@ -49,6 +58,8 @@
   "playlistDownloadVideos": "Download videos",
   "playlistDownloadAudiosOnly": "Download audios",
   "playlistDownloadVideosOnly": "Download only videos",
+  "playlistSettingsQuotaTitle": "Download quota",
+  "playlistSettingsQuotaDescription": "This is quota for concurrent download and transform streams",
 
   "permissionError": "The app needs the storage permission to download files!",
 

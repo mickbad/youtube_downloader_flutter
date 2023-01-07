@@ -14,7 +14,8 @@ class Settings {
           ThemeSetting? theme,
           String? ffmpegContainer,
           String? ffmpegPath,
-          Locale? locale}) =>
+          Locale? locale,
+          int? downloadQuota}) =>
       throw UnimplementedError();
 
   String get ffmpegContainer => throw UnimplementedError();
@@ -26,6 +27,8 @@ class Settings {
   ThemeSetting get theme => throw UnimplementedError();
 
   Locale get locale => throw UnimplementedError();
+
+  int get downloadQuota => throw UnimplementedError();
 }
 
 @immutable
@@ -47,8 +50,11 @@ class SettingsImpl implements Settings {
   @override
   final Locale locale;
 
+  @override
+  final int downloadQuota;
+
   const SettingsImpl._(this._prefs, this.downloadPath, this.theme,
-      this.ffmpegContainer, this.ffmpegPath, this.locale);
+      this.ffmpegContainer, this.ffmpegPath, this.locale, this.downloadQuota);
 
   @override
   SettingsImpl copyWith(
@@ -56,7 +62,8 @@ class SettingsImpl implements Settings {
       ThemeSetting? theme,
       String? ffmpegContainer,
       String? ffmpegPath,
-      Locale? locale}) {
+      Locale? locale,
+      int? downloadQuota}) {
     if (downloadPath != null) {
       _prefs.setString('download_path', downloadPath);
     }
@@ -72,6 +79,9 @@ class SettingsImpl implements Settings {
     if (locale != null) {
       _prefs.setString('locale', locale.languageCode);
     }
+    if (downloadQuota != null) {
+      _prefs.setInt('download_quota', downloadQuota);
+    }
 
     return SettingsImpl._(
         _prefs,
@@ -79,7 +89,8 @@ class SettingsImpl implements Settings {
         theme ?? this.theme,
         ffmpegContainer ?? this.ffmpegContainer,
         ffmpegPath ?? this.ffmpegPath,
-        locale ?? this.locale);
+        locale ?? this.locale,
+        downloadQuota ?? this.downloadQuota);
   }
 
   static Future<SettingsImpl> init(SharedPreferences prefs) async {
@@ -118,8 +129,15 @@ class SettingsImpl implements Settings {
       langCode = defaultLang.languageCode;
       prefs.setString('locale', defaultLang.languageCode);
     }
+
+    var downloadQuota = prefs.getInt("download_quota");
+    if (downloadQuota == null) {
+      downloadQuota = 2;
+      prefs.setInt("download_quota", downloadQuota);
+    }
+
     return SettingsImpl._(prefs, path, ThemeSetting.fromId(themeId),
-        ffmpegContainer, ffmpegPath, Locale(langCode));
+        ffmpegContainer, ffmpegPath, Locale(langCode), downloadQuota);
   }
 
 }

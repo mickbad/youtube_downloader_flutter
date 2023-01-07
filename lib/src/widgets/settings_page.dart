@@ -19,6 +19,15 @@ class SettingsPage extends HookConsumerWidget {
     DropdownMenuItem(value: '.mkv', child: Text('.mkv'))
   ];
 
+  static const downloadQuotaItems = <DropdownMenuItem<int>>[
+    DropdownMenuItem(value: 1, child: Text('1')),
+    DropdownMenuItem(value: 2, child: Text('2')),
+    DropdownMenuItem(value: 3, child: Text('3')),
+    DropdownMenuItem(value: 4, child: Text('4')),
+    DropdownMenuItem(value: 5, child: Text('5')),
+    DropdownMenuItem(value: 6, child: Text('6')),
+  ];
+
   final locales = AppLocalizations.supportedLocales
       .map((e) => DropdownMenuItem(value: e, child: Text(e.languageCode)))
       .toList();
@@ -77,6 +86,7 @@ class SettingsPage extends HookConsumerWidget {
           const Divider(
             height: 0,
           ),
+
           ListTile(
             title: Text(intl.downloadDir),
             subtitle: Text(settings.state.downloadPath),
@@ -94,10 +104,10 @@ class SettingsPage extends HookConsumerWidget {
           ),
 
           ffmpeg_locator_settings,
-
           const Divider(
             height: 0,
           ),
+
           ListTile(
             title: Text(intl.ffmpegContainer),
             subtitle: Text(intl.ffmpegDescription),
@@ -111,6 +121,7 @@ class SettingsPage extends HookConsumerWidget {
           const Divider(
             height: 0,
           ),
+
           ListTile(
             title: Text(intl.language),
             trailing: DropdownButton(
@@ -123,10 +134,28 @@ class SettingsPage extends HookConsumerWidget {
           const Divider(
             height: 0,
           ),
+
+          ListTile(
+            title: Text(intl.playlistSettingsQuotaTitle),
+            subtitle: Text(intl.playlistSettingsQuotaDescription),
+            trailing: DropdownButton(
+              value: settings.state.downloadQuota,
+              onChanged: (int? value) => settings.state = settings.state.copyWith(downloadQuota: value),
+              items: downloadQuotaItems,
+            ),
+          ),
+          const Divider(
+            height: 0,
+          ),
+
           ListTile(
             title: Text(intl.credits),
             subtitle: Text(intl.credits_content),
           ),
+          const Divider(
+            height: 0,
+          ),
+
         ],
       ),
     );
