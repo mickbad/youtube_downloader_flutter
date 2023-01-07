@@ -36,6 +36,20 @@
   "trackID3FieldAlbum": "Album",
   "trackID3Action": "Update",
 
+  "playlistTooltip": "Tap on line to select or deselect video to download",
+  "playlistTitle": "{count} videos or audio to download",
+  "@playlistTitle": {
+    "placeholders": {
+      "count": {
+        "example": "29",
+        "description": "Videos count"
+      }
+    }
+  },
+  "playlistDownloadVideos": "Download videos",
+  "playlistDownloadAudiosOnly": "Download audios",
+  "playlistDownloadVideosOnly": "Download only videos",
+
   "permissionError": "The app needs the storage permission to download files!",
 
   "startDownload": "Started downloading: {title}",

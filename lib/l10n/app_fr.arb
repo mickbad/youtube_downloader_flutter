@@ -36,6 +36,20 @@
   "trackID3FieldAlbum": "Album",
   "trackID3Action": "Appliquez",
 
+  "playlistTooltip": "Tapez sur la ligne pour sélectionner ou déselectionner un titre de la liste",
+  "playlistTitle": "Liste des {count} vidéos ou audios à télécharger",
+  "@playlistTitle": {
+    "placeholders": {
+      "count": {
+        "example": "29",
+        "description": "Videos count"
+      }
+    }
+  },
+  "playlistDownloadVideos": "Télécharger les vidéos",
+  "playlistDownloadAudiosOnly": "Télécharger les audios",
+  "playlistDownloadVideosOnly": "Télécharger les vidéos seulement",
+
   "permissionError": "L'application a besoin des permissions de stockage pour télécharger les fichiers !",
 
   "startDownload": "Démarrage du téléchargement : {title}",

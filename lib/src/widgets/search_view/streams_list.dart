@@ -54,8 +54,8 @@ class StreamsList extends HookConsumerWidget {
 
       if (stream is MuxedStreamInfo) {
         widgetStream = MaterialButton(
-          onPressed: () {
-            downloadManager.state.downloadStream(yt, video, settings.state,
+          onPressed: () async {
+            await downloadManager.state.downloadStream(yt, video, settings.state,
                 StreamType.video, AppLocalizations.of(context)!,
                 singleStream: stream);
 
@@ -85,8 +85,8 @@ class StreamsList extends HookConsumerWidget {
             merger.video = stream;
             isMergeWanted = true;
           },
-          onPressed: () {
-            downloadManager.state.downloadStream(yt, video, settings.state,
+          onPressed: () async {
+            await downloadManager.state.downloadStream(yt, video, settings.state,
                 StreamType.video, AppLocalizations.of(context)!,
                 singleStream: stream);
 
@@ -117,11 +117,10 @@ class StreamsList extends HookConsumerWidget {
             merger.audio = stream;
             isMergeWanted = true;
           },
-          onPressed: () {
-            downloadManager.state.downloadStream(yt, video, settings.state,
+          onPressed: () async {
+            await downloadManager.state.downloadStream(yt, video, settings.state,
                 StreamType.audio, AppLocalizations.of(context)!,
                 singleStream: stream);
-
 
             // close window
             if (!isMergeWanted) {
@@ -259,8 +258,8 @@ class StreamsList extends HookConsumerWidget {
               style: ButtonStyle(
                   padding: MaterialStateProperty.all<EdgeInsets>(
                       const EdgeInsets.all(20))),
-              onPressed: () {
-                downloadManager.state.downloadStream(yt, video, settings.state,
+              onPressed: () async {
+                await downloadManager.state.downloadStream(yt, video, settings.state,
                     StreamType.video, AppLocalizations.of(context)!,
                     merger: merger, ffmpegContainer: settings.state.ffmpegContainer);
                 Navigator.of(context).pop();

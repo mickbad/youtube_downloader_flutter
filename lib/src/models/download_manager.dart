@@ -37,6 +37,7 @@ class DownloadManager extends ChangeNotifier {
   Future<void> removeVideo(SingleTrack video) => throw UnimplementedError();
 
   List<SingleTrack> get videos => throw UnimplementedError();
+  int get countProcessing => throw UnimplementedError();
 }
 
 class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
@@ -56,6 +57,9 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
     _prefs.setInt('next_id', ++_nextId);
     return _nextId;
   }
+
+  @override
+  int get countProcessing => videos.where((element) => element.downloadStatus == DownloadStatus.downloading || element.downloadStatus == DownloadStatus.muxing).length;
 
   DownloadManagerImpl._(this._prefs, this._nextId, this.videoIds, this.videos);
 
@@ -146,12 +150,27 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       }
     }
 
+    // waiting queue free
+    while(true) {
+      // get video downloading count
+      if (countProcessing < 2) {
+        // we can download
+        break;
+      }
+
+      // little pause
+      await Future.delayed(const Duration(seconds: 1), () {});
+    }
+
     if (isMerging) {
       processMuxedTrack(yt, video, merger!, stream, saveDir, id,
           ffmpegContainer!, settings, localizations);
     } else {
       processSingleTrack(yt, video, stream, saveDir, id, type, settings, localizations);
     }
+
+    // litte waiting
+    await Future.delayed(const Duration(milliseconds: 500), () {});
   }
 
   Future<void> processSingleTrack(

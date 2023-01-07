@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:youtube_downloader/src/widgets/search_view/playlists_list.dart';
 import 'package:youtube_downloader/src/widgets/search_view/streams_list.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool loadingStreams = false;
+  double percentLoading = -1.0;
   String url = "";
   TextEditingController urlController = TextEditingController();
 
@@ -86,6 +88,11 @@ class _HomePageState extends State<HomePage> {
                     icon: const Icon(Icons.paste, size: 30, color: Colors.black45,),
                     tooltip: AppLocalizations.of(context)!.searchUrlTooltip,
                     onPressed: () async {
+                      // check if already processing
+                      if (loadingStreams) {
+                        return;
+                      }
+
                       // get clipboard
                       ClipboardData? cdata = await Clipboard.getData(Clipboard.kTextPlain);
                       if (cdata != null && cdata.text != null && (cdata.text!.toLowerCase().startsWith("https://www.youtube.com") || cdata.text!.toLowerCase().startsWith("https://youtu.be"))) {
@@ -105,7 +112,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
                 onPressed: () async => await launchUrlStream(context),
-                child: (loadingStreams) ? const CircularProgressIndicator() : Text(AppLocalizations.of(context)!.searchUrl),
+                child: (loadingStreams) ? ((percentLoading < 0.0 || percentLoading >= 100.0) ? const CircularProgressIndicator() : Text('$percentLoading%')) : Text(AppLocalizations.of(context)!.searchUrl),
               ),
             ),
           ],
@@ -118,6 +125,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> launchUrlStream(BuildContext context) async {
+    // check if already processing
+    if (loadingStreams) {
+      return;
+    }
+
+    // processing
     setState(() {
       loadingStreams = true;
     });
@@ -127,21 +140,19 @@ class _HomePageState extends State<HomePage> {
 
       // check if url is a youtube list stream
       if (url.toLowerCase().contains("list=")) {
-        // Get playlist metadata.
-        var playlist = await yt.playlists.get(url);
-
-        var title = playlist.title;
-        var author = playlist.author;
-        // print("+ ${playlist.id}: $author - $title: ${playlist.videoCount} videos");
-
-        await for (var video in yt.playlists.getVideos(playlist.id)) {
-          var videoTitle = video.title;
-          var videoAuthor = video.author;
-          print("- $videoAuthor - $videoTitle");
+        // parse playlist
+        QueryListVideos queryListVideos = QueryListVideos(url: url);
+        await for (var percent in queryListVideos.parse()) {
+          setState(() {
+            percentLoading = percent;
+          });
         }
 
-        urlController.text = "Playlist not available yet!";
-        url = "";
+        // reset
+        percentLoading = -1.0;
+
+        // show download dialog
+        showDialog(context: context, builder: (context) => PlaylistsList(queryListVideos));
       }
       else {
         final videoYT = await yt.videos.get(url);
@@ -153,6 +164,8 @@ class _HomePageState extends State<HomePage> {
             videoYT.thumbnails.highResUrl,
             videoYT.uploadDate,
             videoYT.uploadDateRaw);
+
+        // show download dialog
         showDialog(context: context, builder: (context) => StreamsList(video));
       }
     } catch (e) {
@@ -160,6 +173,7 @@ class _HomePageState extends State<HomePage> {
       url = "";
     }
 
+    // end processing
     setState(() {
       loadingStreams = false;
     });
