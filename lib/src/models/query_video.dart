@@ -26,8 +26,9 @@ class QueryVideo {
   String? album;
   final String? path;
   final List<int>? thumbnailBytes;
+  String prefixName;
 
-  QueryVideo(this.title, this.id, this.author, this.duration, this.thumbnail, this.uploadDate, this.uploadDateRaw, {this.album, this.path, this.thumbnailBytes});
+  QueryVideo(this.title, this.id, this.author, this.duration, this.thumbnail, this.uploadDate, this.uploadDateRaw, {this.album, this.path, this.thumbnailBytes, this.prefixName = ""});
 
   @override
   String toString() {
@@ -237,7 +238,13 @@ class QueryListVideos {
   ///
   Future<void> download(DownloadManager downloadManager, YoutubeExplode yt, Settings settings, AppLocalizations localizations, QueryListDownload type) async {
     // parse each stream enable to download
+    int currentStream = 1;
+    int maxLeadingPrefix = videoEnableCount.toString().length + 1;
     for(QueryListVideoItem stream in videosEnableList) {
+      // set prefix name
+      stream.queryVideo.prefixName = currentStream.toString().padLeft(maxLeadingPrefix, '0') + " - ";
+      currentStream ++;
+
       // download stream
       switch(type) {
         case QueryListDownload.merge:

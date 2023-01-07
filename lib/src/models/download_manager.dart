@@ -182,12 +182,16 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       StreamType type,
       Settings settings,
       AppLocalizations localizations) async {
+    // prefix pathname
+    String prefixName = video.prefixName ?? "";
+
+    final pathname = "$prefixName${video.title.replaceAll(invalidChars, '_')}";
     final downloadPath = await getValidPath(
-        '${path.join(saveDir, video.title.replaceAll(invalidChars, '_'))}${'.${stream.container.name}'}');
+        '${path.join(saveDir, pathname)}${'.${stream.container.name}'}');
 
     // for mp3 convertion
     final downloadPathConvert = await getValidPath(
-        '${path.join(saveDir, video.title.replaceAll(invalidChars, '_'))}${'.mp3'}');
+        '${path.join(saveDir, pathname)}${'.mp3'}');
 
     final tempPath = path.join(saveDir, 'Unconfirmed $id.ytdownload');
 
@@ -268,8 +272,12 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
       String ffmpegContainer,
       Settings settings,
       AppLocalizations localizations) async {
+    // prefix pathname
+    String prefixName = video.prefixName ?? "";
+
+    final pathname = "$prefixName${video.title.replaceAll(invalidChars, '_')}";
     final downloadPath = await getValidPath(
-        '${path.join(settings.downloadPath, video.title.replaceAll(invalidChars, '_'))}$ffmpegContainer');
+        '${path.join(settings.downloadPath, pathname)}$ffmpegContainer');
 
     final audioTrack = processTrack(yt, merger.audio!, saveDir,
         stream.container.name, video, StreamType.audio, localizations);
