@@ -146,7 +146,7 @@ class _PlaylistsLists extends ConsumerState<PlaylistsList> {
 
         OutlinedButton(
             style: OutlinedButton.styleFrom(
-              foregroundColor: (widget.playlist.videoEnableCount < 1) ? Colors.grey : Colors.amberAccent,
+              foregroundColor: (widget.playlist.videoEnableCount < 1) ? Colors.grey : Colors.orange,
               padding: const EdgeInsets.all(10),
             ),
             onPressed: () async {
@@ -166,7 +166,7 @@ class _PlaylistsLists extends ConsumerState<PlaylistsList> {
 
         OutlinedButton(
             style: OutlinedButton.styleFrom(
-              foregroundColor: (widget.playlist.videoEnableCount < 1) ? Colors.grey : Colors.amberAccent,
+              foregroundColor: (widget.playlist.videoEnableCount < 1) ? Colors.grey : Colors.orange,
               padding: const EdgeInsets.all(10),
             ),
             onPressed: () async {
