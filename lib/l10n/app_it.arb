@@ -1,6 +1,6 @@
 {
   "title": "Youtube Downloader",
-  "startSearch": "Inizia a cercare!",
+  "startSearch": "Inserisci l'URL di un video o di una playlist",
   "searchUrl": "Download l'URL",
   "searchUrlTooltip": "Incolla la tua URL dal appunti",
 
@@ -37,6 +37,34 @@
   "trackID3FieldArtist": "Autore",
   "trackID3FieldAlbum": "Album",
   "trackID3Action": "Salva",
+
+  "playlistParsing": "Riproducendo la playlist: {percent} %",
+  "@playlistParsing": {
+    "placeholders": {
+      "percent": {
+        "example": "29",
+        "description": "Percento dello scan"
+      }
+    }
+  },
+  "playlistTooltip": "Tocca sulla linea per selezionare o deselezionare un titolo della lista",
+  "playlistTitle": "Lista dei {count} video da download",
+  "@playlistTitle": {
+    "placeholders": {
+      "count": {
+        "example": "29",
+        "description": "Numero di video"
+      }
+    }
+  },
+  "playlistDownloadVideos": "Download i video + audio",
+  "playlistDownloadAudiosOnly": "Download i audio",
+  "playlistDownloadVideosOnly": "Download i video",
+
+  "settingsQuotaTitle": "Quota di download",
+  "settingsQuotaDescription": "Numero di download i converzione simultanee",
+  "settingsLeadingZeroTitle": "Playlist: prefisso sul nome del file",
+  "settingsLeadingZeroDescription": " Aggiunto lo zero iniziale al nome del file per i download delle playlist",
 
   "startDownload": "Inizio download: {title}",
   "@startDownload": {

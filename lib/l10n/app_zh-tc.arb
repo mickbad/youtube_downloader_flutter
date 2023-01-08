@@ -1,6 +1,6 @@
 {
   "title": "YT下載者",
-  "startSearch": "開始搜索或者寫到網址！",
+  "startSearch": "寫到視頻網址或者播放列表網址",
   "searchUrl": "下載網址",
   "searchUrlTooltip": "從剪貼板粘貼網址",
 
@@ -35,6 +35,34 @@
   "trackID3FieldArtist": "演唱者",
   "trackID3FieldAlbum": "專輯",
   "trackID3Action": "儲存",
+
+  "playlistParsing": "播放列表分析處理：{percent}%",
+  "@playlistParsing": {
+    "placeholders": {
+      "percent": {
+        "example": "29",
+        "description": "分析百分"
+      }
+    }
+  },
+  "playlistTooltip": "敲排為選擇或取消選擇視頻",
+  "playlistTitle": "{count}段要下載的視頻",
+  "@playlistTitle": {
+    "placeholders": {
+      "count": {
+        "example": "29",
+        "description": "視頻數"
+      }
+    }
+  },
+  "playlistDownloadVideos": "視頻和音響下載",
+  "playlistDownloadAudiosOnly": "音響下載",
+  "playlistDownloadVideosOnly": "視頻下載",
+
+  "settingsQuotaTitle": "下載指標",
+  "settingsQuotaDescription": "允許的同期下載和變換數",
+  "settingsLeadingZeroTitle": "播放列表：文件名稱的前冠",
+  "settingsLeadingZeroDescription": "為播放列表下載加文件名稱前零號",
 
   "permissionError": "應用為下載文件必需儲存允准！",
 

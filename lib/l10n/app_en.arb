@@ -46,7 +46,7 @@
     }
   },
   "playlistTooltip": "Tap on line to select or deselect video to download",
-  "playlistTitle": "{count} videos or audios to download",
+  "playlistTitle": "List of all {count} videos or audios to download",
   "@playlistTitle": {
     "placeholders": {
       "count": {
@@ -55,14 +55,14 @@
       }
     }
   },
-  "playlistDownloadVideos": "Download videos",
+  "playlistDownloadVideos": "Download videos + audios",
   "playlistDownloadAudiosOnly": "Download audios",
-  "playlistDownloadVideosOnly": "Download only videos",
+  "playlistDownloadVideosOnly": "Download videos",
 
   "settingsQuotaTitle": "Download quota",
-  "settingsQuotaDescription": "This is quota for concurrent download and transform streams",
+  "settingsQuotaDescription": "The max number of authorized concurrent download and transform streams",
   "settingsLeadingZeroTitle": "Playlist: filename header",
-  "settingsLeadingZeroDescription": "Add leading zero in pathname for playlist downloading",
+  "settingsLeadingZeroDescription": "Add a leading zero in the pathname when dowloading a playlist",
 
   "permissionError": "The app needs the storage permission to download files!",
 

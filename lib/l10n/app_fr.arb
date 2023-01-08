@@ -41,7 +41,7 @@
     "placeholders": {
       "percent": {
         "example": "29",
-        "description": "Scan percent"
+        "description": "Pourcentage du scan"
       }
     }
   },
@@ -51,16 +51,16 @@
     "placeholders": {
       "count": {
         "example": "29",
-        "description": "Videos count"
+        "description": "Compte de vidéos"
       }
     }
   },
-  "playlistDownloadVideos": "Télécharger les vidéos",
+  "playlistDownloadVideos": "Télécharger les vidéos + audios",
   "playlistDownloadAudiosOnly": "Télécharger les audios",
-  "playlistDownloadVideosOnly": "Télécharger les vidéos seulement",
+  "playlistDownloadVideosOnly": "Télécharger les vidéos",
 
   "settingsQuotaTitle": "Quota de téléchargement",
-  "settingsQuotaDescription": "Nombre de téléchargements et de transformations simultanés",
+  "settingsQuotaDescription": "Nombre de téléchargements et de conversions simultanés",
   "settingsLeadingZeroTitle": "Playlist : préfixe du nom du fichier",
   "settingsLeadingZeroDescription": "Ajout de zéro en tête de nom du fichier pour les téléchargements de playlist",
 
