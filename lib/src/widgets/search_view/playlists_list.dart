@@ -54,7 +54,7 @@ class _PlaylistsLists extends ConsumerState<PlaylistsList> {
         },
         child: ListTile(
           subtitle: Text(
-            '${stream.queryVideo.author} - ${stream.queryVideo.duration}',
+            '${AppLocalizations.of(context)!.author} : ${stream.queryVideo.author} - ${stream.queryVideo.duration.inHours.toString().padLeft(2, '0')}:${(stream.queryVideo.duration.inMinutes%60).toString().padLeft(2, '0')}:${(stream.queryVideo.duration.inSeconds%60).toString().padLeft(2, '0')}',
             style: stream.enable ? null : const TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey),
           ),
           title: Text(
