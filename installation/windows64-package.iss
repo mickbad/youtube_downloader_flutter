@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "YoutubeDownloader"
-#define MyAppVersion "1.2.0"
+#define MyAppVersion "1.3.0"
 #define MyAppPublisher "Hexer10 - MickBad"
 #define MyAppURL "https://github.com/Hexer10/youtube_downloader_flutter"
 #define MyAppExeName "youtube_downloader.exe"
