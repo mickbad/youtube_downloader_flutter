@@ -24,11 +24,12 @@ class QueryVideo {
   final String? uploadDateRaw;
 
   String? album;
+  int? track;
   final String? path;
   final List<int>? thumbnailBytes;
   String prefixName;
 
-  QueryVideo(this.title, this.id, this.author, this.duration, this.thumbnail, this.uploadDate, this.uploadDateRaw, {this.album, this.path, this.thumbnailBytes, this.prefixName = ""});
+  QueryVideo(this.title, this.id, this.author, this.duration, this.thumbnail, this.uploadDate, this.uploadDateRaw, {this.album, this.track, this.path, this.thumbnailBytes, this.prefixName = ""});
 
   @override
   String toString() {
@@ -238,14 +239,19 @@ class QueryListVideos {
   ///
   Future<void> download(DownloadManager downloadManager, YoutubeExplode yt, Settings settings, AppLocalizations localizations, QueryListDownload type) async {
     // parse each stream enable to download
-    int currentStream = 1;
+    int currentStreamNumber = 0;
     int maxLeadingPrefix = videoEnableCount.toString().length;
     for(QueryListVideoItem stream in videosEnableList) {
+      // increment
+      currentStreamNumber ++;
+
       // set prefix name
       if (settings.isLeadingZeroPlaylist) {
-        stream.queryVideo.prefixName = currentStream.toString().padLeft(maxLeadingPrefix, '0') + " - ";
-        currentStream ++;
+        stream.queryVideo.prefixName = currentStreamNumber.toString().padLeft(maxLeadingPrefix, '0') + " - ";
       }
+
+      // add track number in video (for mp3 extraction?)
+      stream.queryVideo.track = currentStreamNumber;
 
       // download stream
       switch(type) {
