@@ -55,14 +55,15 @@ class StreamsList extends HookConsumerWidget {
       if (stream is MuxedStreamInfo) {
         widgetStream = MaterialButton(
           onPressed: () async {
-            await downloadManager.state.downloadStream(yt, video, settings.state,
-                StreamType.video, AppLocalizations.of(context)!,
-                singleStream: stream);
-
             // close window
             if (!isMergeWanted) {
               Navigator.of(context).pop();
             }
+
+            // download
+            await downloadManager.state.downloadStream(yt, video, settings.state,
+                StreamType.video, AppLocalizations.of(context)!,
+                singleStream: stream);
           },
           child: ListTile(
             subtitle: Text(
@@ -86,14 +87,15 @@ class StreamsList extends HookConsumerWidget {
             isMergeWanted = true;
           },
           onPressed: () async {
-            await downloadManager.state.downloadStream(yt, video, settings.state,
-                StreamType.video, AppLocalizations.of(context)!,
-                singleStream: stream);
-
             // close window
             if (!isMergeWanted) {
               Navigator.of(context).pop();
             }
+
+            // download
+            await downloadManager.state.downloadStream(yt, video, settings.state,
+                StreamType.video, AppLocalizations.of(context)!,
+                singleStream: stream);
           },
           child: ListTile(
             subtitle: Text(
@@ -118,15 +120,15 @@ class StreamsList extends HookConsumerWidget {
             isMergeWanted = true;
           },
           onPressed: () async {
-            await downloadManager.state.downloadStream(yt, video, settings.state,
-                StreamType.audio, AppLocalizations.of(context)!,
-                singleStream: stream);
-
             // close window
             if (!isMergeWanted) {
               Navigator.of(context).pop();
             }
 
+            // download
+            await downloadManager.state.downloadStream(yt, video, settings.state,
+                StreamType.audio, AppLocalizations.of(context)!,
+                singleStream: stream);
           },
           child: ListTile(
             subtitle: Text(
