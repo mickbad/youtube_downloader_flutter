@@ -239,11 +239,13 @@ class QueryListVideos {
   Future<void> download(DownloadManager downloadManager, YoutubeExplode yt, Settings settings, AppLocalizations localizations, QueryListDownload type) async {
     // parse each stream enable to download
     int currentStream = 1;
-    int maxLeadingPrefix = videoEnableCount.toString().length + 1;
+    int maxLeadingPrefix = videoEnableCount.toString().length;
     for(QueryListVideoItem stream in videosEnableList) {
       // set prefix name
-      stream.queryVideo.prefixName = currentStream.toString().padLeft(maxLeadingPrefix, '0') + " - ";
-      currentStream ++;
+      if (settings.isLeadingZeroPlaylist) {
+        stream.queryVideo.prefixName = currentStream.toString().padLeft(maxLeadingPrefix, '0') + " - ";
+        currentStream ++;
+      }
 
       // download stream
       switch(type) {

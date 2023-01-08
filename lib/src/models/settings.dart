@@ -15,7 +15,8 @@ class Settings {
           String? ffmpegContainer,
           String? ffmpegPath,
           Locale? locale,
-          int? downloadQuota}) =>
+          int? downloadQuota,
+          bool? isLeadingZeroPlaylist}) =>
       throw UnimplementedError();
 
   String get ffmpegContainer => throw UnimplementedError();
@@ -29,6 +30,8 @@ class Settings {
   Locale get locale => throw UnimplementedError();
 
   int get downloadQuota => throw UnimplementedError();
+
+  bool get isLeadingZeroPlaylist => throw UnimplementedError();
 }
 
 @immutable
@@ -53,8 +56,12 @@ class SettingsImpl implements Settings {
   @override
   final int downloadQuota;
 
+  @override
+  final bool isLeadingZeroPlaylist;
+
   const SettingsImpl._(this._prefs, this.downloadPath, this.theme,
-      this.ffmpegContainer, this.ffmpegPath, this.locale, this.downloadQuota);
+      this.ffmpegContainer, this.ffmpegPath, this.locale, this.downloadQuota,
+      this.isLeadingZeroPlaylist);
 
   @override
   SettingsImpl copyWith(
@@ -63,7 +70,8 @@ class SettingsImpl implements Settings {
       String? ffmpegContainer,
       String? ffmpegPath,
       Locale? locale,
-      int? downloadQuota}) {
+      int? downloadQuota,
+      bool? isLeadingZeroPlaylist}) {
     if (downloadPath != null) {
       _prefs.setString('download_path', downloadPath);
     }
@@ -82,6 +90,9 @@ class SettingsImpl implements Settings {
     if (downloadQuota != null) {
       _prefs.setInt('download_quota', downloadQuota);
     }
+    if (isLeadingZeroPlaylist != null) {
+      _prefs.setBool("playlist_isleadingzero", isLeadingZeroPlaylist);
+    }
 
     return SettingsImpl._(
         _prefs,
@@ -90,7 +101,9 @@ class SettingsImpl implements Settings {
         ffmpegContainer ?? this.ffmpegContainer,
         ffmpegPath ?? this.ffmpegPath,
         locale ?? this.locale,
-        downloadQuota ?? this.downloadQuota);
+        downloadQuota ?? this.downloadQuota,
+        isLeadingZeroPlaylist ?? this.isLeadingZeroPlaylist,
+    );
   }
 
   static Future<SettingsImpl> init(SharedPreferences prefs) async {
@@ -136,8 +149,16 @@ class SettingsImpl implements Settings {
       prefs.setInt("download_quota", downloadQuota);
     }
 
+    var isLeadingZeroPlaylist = prefs.getBool("playlist_isleadingzero");
+    if (isLeadingZeroPlaylist == null) {
+      isLeadingZeroPlaylist = true;
+      prefs.setBool("playlist_isleadingzero", isLeadingZeroPlaylist);
+    }
+
     return SettingsImpl._(prefs, path, ThemeSetting.fromId(themeId),
-        ffmpegContainer, ffmpegPath, Locale(langCode), downloadQuota);
+        ffmpegContainer, ffmpegPath, Locale(langCode), downloadQuota,
+        isLeadingZeroPlaylist,
+    );
   }
 
 }

@@ -58,8 +58,11 @@
   "playlistDownloadVideos": "Download videos",
   "playlistDownloadAudiosOnly": "Download audios",
   "playlistDownloadVideosOnly": "Download only videos",
-  "playlistSettingsQuotaTitle": "Download quota",
-  "playlistSettingsQuotaDescription": "This is quota for concurrent download and transform streams",
+
+  "settingsQuotaTitle": "Download quota",
+  "settingsQuotaDescription": "This is quota for concurrent download and transform streams",
+  "settingsLeadingZeroTitle": "Playlist filename header",
+  "settingsLeadingZeroDescription": "Add leading zero in pathname for playlist downloading",
 
   "permissionError": "The app needs the storage permission to download files!",
 

@@ -136,12 +136,24 @@ class SettingsPage extends HookConsumerWidget {
           ),
 
           ListTile(
-            title: Text(intl.playlistSettingsQuotaTitle),
-            subtitle: Text(intl.playlistSettingsQuotaDescription),
+            title: Text(intl.settingsQuotaTitle),
+            subtitle: Text(intl.settingsQuotaDescription),
             trailing: DropdownButton(
               value: settings.state.downloadQuota,
               onChanged: (int? value) => settings.state = settings.state.copyWith(downloadQuota: value),
               items: downloadQuotaItems,
+            ),
+          ),
+          const Divider(
+            height: 0,
+          ),
+
+          ListTile(
+            title: Text(intl.settingsLeadingZeroTitle),
+            subtitle: Text(intl.settingsLeadingZeroDescription),
+            trailing: Switch(
+              value: settings.state.isLeadingZeroPlaylist,
+              onChanged: (bool value) => settings.state = settings.state.copyWith(isLeadingZeroPlaylist: value),
             ),
           ),
           const Divider(
