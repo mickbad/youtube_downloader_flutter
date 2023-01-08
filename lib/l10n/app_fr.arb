@@ -61,7 +61,7 @@
 
   "settingsQuotaTitle": "Quota de téléchargement",
   "settingsQuotaDescription": "Nombre de téléchargements et de transformations simultanés",
-  "settingsLeadingZeroTitle": "Playlist préfixe du nom du fichier",
+  "settingsLeadingZeroTitle": "Playlist : préfixe du nom du fichier",
   "settingsLeadingZeroDescription": "Ajout de zéro en tête de nom du fichier pour les téléchargements de playlist",
 
   "permissionError": "L'application a besoin des permissions de stockage pour télécharger les fichiers !",
