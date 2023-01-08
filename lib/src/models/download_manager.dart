@@ -558,6 +558,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
 
     }, (Statistics stats) {
       // generate stats
+      downloadVideo.downloadPerc = (stats.getTime() * 1000 / video.duration.inMicroseconds * 100).round();
       // print("stats: ${stats.toString()}");
       // print("stats: ${stats.getSize()}");
 
