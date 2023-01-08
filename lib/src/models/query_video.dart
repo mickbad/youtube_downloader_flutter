@@ -209,7 +209,9 @@ class QueryListVideos {
           videoYT.duration!,
           videoYT.thumbnails.highResUrl,
           videoYT.uploadDate,
-          videoYT.uploadDateRaw);
+          videoYT.uploadDateRaw,
+          album: title,
+      );
 
       // add current stream to Video list download
       QueryListVideoItem item = QueryListVideoItem(url: video.url, queryVideo: queryVideo, streamBestAudio: streamBestAudio, streamBestVideo: streamBestVideo);
