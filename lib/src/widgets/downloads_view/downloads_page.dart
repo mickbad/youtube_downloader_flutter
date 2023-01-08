@@ -34,11 +34,14 @@ class DownloadsPage extends HookConsumerWidget {
   }
 }
 
-class DownloadsAppBar extends HookWidget {
+class DownloadsAppBar extends HookConsumerWidget {
   const DownloadsAppBar({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final downloadManager = ref.watch(downloadProvider.state);
+    useListenable(downloadManager.state);
+
     return SafeArea(
       child: Material(
         elevation: 5,
@@ -46,16 +49,42 @@ class DownloadsAppBar extends HookWidget {
           padding: const EdgeInsets.only(left: 10),
           height: kToolbarHeight,
           child: Row(children: [
-            IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.of(context).pop()),
-            Center(
-              child: Text(
-                AppLocalizations.of(context)!.downloads,
-                style: Theme.of(context).textTheme.headline5,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.of(context).pop()),
+
+                Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.downloads,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ),
+              ],
             ),
-          ]),
+
+            if (downloadManager.state.videos.isNotEmpty)
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: (downloadManager.state.videos.isEmpty) ? Colors.grey : Colors.blueAccent,
+                  padding: const EdgeInsets.all(10),
+                ),
+                onPressed: () async {
+                  // check
+                  if (downloadManager.state.videos.isEmpty) {
+                    return;
+                  }
+
+                  // clean
+                  await downloadManager.state.removeAllVideos(forceDelete: false);
+                },
+                child: Text(AppLocalizations.of(context)!.downloadCleanUpList),
+              ),
+          ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
         ),
       ),
     );

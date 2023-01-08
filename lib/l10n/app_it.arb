@@ -23,6 +23,8 @@
   "author": "Autore",
   "uploadDateRow": "Pubblicato",
 
+  "downloadCleanUpList": "Lista delle download pulita (nessuna cancellamento)",
+
   "tracksTooltip": "Tocca sulla linea per download il stream, o premere a lungo per selezionare più stream",
   "mergeTracks": "Download i Unire le tracce!",
   "tracksBestMerge": "Il migliore video + qualità dell'audio",

@@ -21,6 +21,8 @@
   "author": "創作者",
   "uploadDateRow": "發表",
 
+  "downloadCleanUpList": "整理下載目錄（無刪除文件）",
+
   "tracksTooltip": "敲排為下載流程，或者長按排多種流程為合并",
   "mergeTracks": "下載和合并軌！",
   "tracksBestMerge": "最硬視頻和最硬音響",

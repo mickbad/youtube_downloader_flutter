@@ -21,6 +21,8 @@
   "author": "Auteur",
   "uploadDateRow": "Publication",
 
+  "downloadCleanUpList": "Nettoyer la liste (aucune suppression)",
+
   "tracksTooltip": "Tapez sur une ligne pour télécharger ou un appui long pour sélectionner la fusion",
   "mergeTracks": "Télécharger et fusionner les pistes !",
   "tracksBestMerge": "Meilleure qualité vidéo et audio",

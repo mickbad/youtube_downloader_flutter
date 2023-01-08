@@ -34,7 +34,8 @@ class DownloadManager extends ChangeNotifier {
           String? ffmpegContainer}) =>
       throw UnimplementedError();
 
-  Future<void> removeVideo(SingleTrack video) => throw UnimplementedError();
+  Future<void> removeVideo(SingleTrack video, {bool forceDelete=true, bool forceNotify=true}) => throw UnimplementedError();
+  Future<void> removeAllVideos({bool forceDelete=true}) => throw UnimplementedError();
 
   List<SingleTrack> get videos => throw UnimplementedError();
   int get countProcessing => throw UnimplementedError();
@@ -74,7 +75,7 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
   }
 
   @override
-  Future<void> removeVideo(SingleTrack video) async {
+  Future<void> removeVideo(SingleTrack video, {bool forceDelete=true, bool forceNotify=true}) async {
     final id = 'video_${video.id}';
 
     videoIds.remove(id);
@@ -83,11 +84,27 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
     _prefs.setStringList('video_list', videoIds);
     _prefs.remove(id);
 
-    final file = File(video.path);
-    if (await file.exists()) {
-      await file.delete();
+    if (forceDelete) {
+      final file = File(video.path);
+      if (await file.exists()) {
+        await file.delete();
+      }
     }
 
+    if (forceNotify) {
+      notifyListeners();
+    }
+  }
+
+  @override
+  Future<void> removeAllVideos({bool forceDelete=true}) async {
+    final myVideos = videos.toList();
+    for(var video in myVideos) {
+      if (video.downloadStatus == DownloadStatus.success || video.downloadStatus == DownloadStatus.failed || video.downloadStatus == DownloadStatus.canceled) {
+        // only no processing streams
+        await removeVideo(video, forceDelete: forceDelete, forceNotify: false);
+      }
+    }
     notifyListeners();
   }
 

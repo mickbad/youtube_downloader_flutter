@@ -134,7 +134,7 @@ class TrailingIcon extends HookConsumerWidget {
                   debugPrint('R: ${res.type} | M: ${res.message}');
                 }),
             IconButton(
-                icon: const Icon(Icons.delete_forever),
+                icon: const Icon(Icons.delete_forever, color: Color.fromRGBO(250, 0, 0, 0.6),),
                 onPressed: () async {
                   downloadManager.state.removeVideo(video);
                 }),
