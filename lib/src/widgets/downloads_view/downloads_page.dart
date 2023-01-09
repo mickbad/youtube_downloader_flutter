@@ -42,6 +42,23 @@ class DownloadsAppBar extends HookConsumerWidget {
     final downloadManager = ref.watch(downloadProvider.state);
     useListenable(downloadManager.state);
 
+    // create cleanup button
+    Widget cleanUpButtonElement;
+    if (MediaQuery.of(context).size.width >= 560) {
+      // LANDSCAPE
+      cleanUpButtonElement = Text(
+        AppLocalizations.of(context)!.downloadCleanUpList,
+      );
+    }
+    else {
+      // PORTRAIT
+      cleanUpButtonElement = IconButton(
+        icon: const Icon(Icons.cleaning_services, color: Colors.blueAccent,),
+        tooltip: AppLocalizations.of(context)!.downloadCleanUpList,
+        onPressed: null,
+      );
+    }
+
     return SafeArea(
       child: Material(
         elevation: 5,
@@ -59,7 +76,10 @@ class DownloadsAppBar extends HookConsumerWidget {
                 Center(
                   child: Text(
                     AppLocalizations.of(context)!.downloads,
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline5,
                   ),
                 ),
               ],
@@ -68,7 +88,9 @@ class DownloadsAppBar extends HookConsumerWidget {
             if (downloadManager.state.videos.isNotEmpty)
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: (downloadManager.state.videos.isEmpty) ? Colors.grey : Colors.blueAccent,
+                  foregroundColor: (downloadManager.state.videos.isEmpty)
+                      ? Colors.grey
+                      : Colors.blueAccent,
                   padding: const EdgeInsets.all(10),
                 ),
                 onPressed: () async {
@@ -80,7 +102,7 @@ class DownloadsAppBar extends HookConsumerWidget {
                   // clean
                   await downloadManager.state.removeAllVideos(forceDelete: false);
                 },
-                child: Text(AppLocalizations.of(context)!.downloadCleanUpList),
+                child: cleanUpButtonElement,
               ),
           ],
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
