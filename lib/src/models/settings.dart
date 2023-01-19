@@ -108,7 +108,7 @@ class SettingsImpl implements Settings {
 
   static Future<SettingsImpl> init(SharedPreferences prefs) async {
     var path = prefs.getString('download_path');
-    if (path == null) {
+    if (path == null || await Directory(path).exists() == false) {
       path = (await getDefaultDownloadDir()).path;
       prefs.setString('download_path', path);
     }
@@ -216,6 +216,10 @@ Future<Directory> getDefaultDownloadDir() async {
     final paths =
         await getExternalStorageDirectories(type: StorageDirectory.music);
     return paths!.first;
+  }
+  if (Platform.isIOS) {
+   final path = await getApplicationDocumentsDirectory();
+   return path;
   }
   if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
     final path = await getDownloadsDirectory();
