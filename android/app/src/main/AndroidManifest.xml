@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="net.hexah.youtube_downloader">
+          package="net.hexah.youtube_downloader"
+          xmlns:tools="http://schemas.android.com/tools">
     <application
             android:requestLegacyExternalStorage="true"
             android:label="youtube_downloader"
@@ -54,5 +55,5 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:remove="android:maxSdkVersion" />
 </manifest>
