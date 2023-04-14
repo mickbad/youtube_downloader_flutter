@@ -15,6 +15,8 @@ import 'src/widgets/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Directory.current = '.';
+
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     setWindowTitle('Youtube Downloader');
     setWindowMinSize(const Size(600, 800));

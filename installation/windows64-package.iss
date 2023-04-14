@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "YoutubeDownloader"
-#define MyAppVersion "1.3.1"
+#define MyAppVersion "1.3.2"
 #define MyAppPublisher "Hexer10 - MickBad"
 #define MyAppURL "https://github.com/Hexer10/youtube_downloader_flutter"
 #define MyAppExeName "youtube_downloader.exe"
@@ -42,6 +42,7 @@ Source: "..\build\windows\runner\Release\flutter_windows.dll"; DestDir: "{app}";
 Source: "..\build\windows\runner\Release\url_launcher_windows_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\windows\runner\Release\permission_handler_windows_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\windows\runner\Release\window_size_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "windows\ffmpeg.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\windows\runner\Release\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
