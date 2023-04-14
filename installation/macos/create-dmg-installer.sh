@@ -65,3 +65,11 @@ create-dmg \
 
 # nettoyage
 rm -fr "$SOURCES_TEMP"
+
+
+# signature
+# codesign --force --sign "Developer ID Application: <identityIdentifier>" <pathToDMG>
+
+echo "* check signature"
+spctl -a -t open --context context:primary-signature -v "$DMG_OUPUT"
+
