@@ -7,11 +7,16 @@ mkdir -p AppDir
 echo '#!/bin/sh
 
 cd "$(dirname "$0")"
+export PATH=.:$PATH
 exec ./youtube_downloader' > AppDir/AppRun
 sudo chmod +x AppDir/AppRun
 
 # Copy All build files to AppDir
 cp -r build/linux/x64/release/bundle/* AppDir
+
+# Copy third party soft
+cp -a installation/linux/ffmpeg AppDir/.
+chmod +x AppDir/ffmpeg
 
 ## Add Application metadata
 # Copy app icon
