@@ -6,6 +6,9 @@ If FFMPEG is added to the path you can long-press two tiles (audio and video), a
 
 ## Building the app
 
+Build with
+Flutter 3.7.10 • channel stable • https://github.com/flutter/flutter.git
+
 You must have the flutter sdk installed.
 
 First clone the app into your system:
