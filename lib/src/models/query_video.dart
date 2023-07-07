@@ -84,10 +84,10 @@ class QueryVideo {
       headerBytes = response.bodyBytes;
     }
 
-    final al = {"comment":"Youtube Downloader Hexer10/Mick"};
+    final al = {"comment":"Youtube Downloader Hexer10/MickBad"};
 
     final encoder = ID3Encoder(bytes);
-    final List<int> output = encoder.encodeSync(MetadataV2_4Body(
+    final List<int> output = encoder.encodeSync(MetadataV2p4Body(
       title: title,
       imageBytes: headerBytes,
       artist: author,

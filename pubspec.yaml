@@ -34,7 +34,7 @@ dependencies:
   open_file: ^3.2.1
   file_picker: ^4.0.0
   url_launcher: ^6.1.7
-  id3_codec: ^1.0.0
+  id3_codec: ^1.0.3
   id3tag: ^0.2.0
   http: ^0.13.5
   ffmpeg_kit_flutter_full_gpl: ^5.1.0-LTS
