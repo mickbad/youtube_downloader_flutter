@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -43,20 +44,28 @@ class DownloadTile extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final video = useListenable(this.video);
+
+    // check if path is valid
+    final bValidPath = File(video.path).existsSync();
     return ListTile(
         onTap:
-            video.downloadStatus == DownloadStatus.success ? _openFile : null,
+            video.downloadStatus == DownloadStatus.success && bValidPath ? _openFile : null,
         title: Text(video.title,
             style: video.downloadStatus == DownloadStatus.canceled ||
-                    video.downloadStatus == DownloadStatus.failed
-                ? const TextStyle(decoration: TextDecoration.lineThrough)
+                    video.downloadStatus == DownloadStatus.failed ||
+                    (!bValidPath && video.downloadStatus != DownloadStatus.downloading)
+                ? TextStyle(
+                    decoration: TextDecoration.lineThrough,
+                    color: Colors.grey.withOpacity(0.7)
+                  )
                 : null),
         subtitle: video.downloadStatus == DownloadStatus.failed
             ? Text(video.error)
             : Text(video.path,
                 style: video.downloadStatus == DownloadStatus.canceled ||
-                        video.downloadStatus == DownloadStatus.failed
-                    ? const TextStyle(decoration: TextDecoration.lineThrough)
+                        video.downloadStatus == DownloadStatus.failed ||
+                        (!bValidPath && video.downloadStatus != DownloadStatus.downloading)
+                    ? TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey.withOpacity(0.7))
                     : null),
         trailing: TrailingIcon(video),
         leading: LeadingIcon(video));
@@ -78,6 +87,10 @@ class LeadingIcon extends HookWidget {
       case DownloadStatus.downloading:
         return Text('${video.downloadPerc}%');
       case DownloadStatus.success:
+        final bValidPath = File(video.path).existsSync();
+        if (!bValidPath) {
+          return Icon(Icons.close, color: Colors.grey.withOpacity(0.7),);
+        }
         return const Icon(Icons.done);
       case DownloadStatus.failed:
         return const Icon(Icons.error);
@@ -99,6 +112,14 @@ class TrailingIcon extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final downloadManager = ref.watch(downloadProvider.state);
+    final bValidPath = File(video.path).existsSync();
+    if (!bValidPath) {
+      return IconButton(
+          icon: const Icon(Icons.delete_forever),
+          onPressed: () async {
+            downloadManager.state.removeVideo(video);
+          });
+    }
 
     switch (video.downloadStatus) {
       case DownloadStatus.downloading:

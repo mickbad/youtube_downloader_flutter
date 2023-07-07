@@ -8,7 +8,7 @@ import 'package:youtube_downloader/src/widgets/search_view/streams_list.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../models/query_video.dart';
-import '../search_bar.dart';
+import '../search_bar.dart' as yt_search;
 import 'app_drawer.dart';
 
 @immutable
@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: const AppDrawer(),
       appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight), child: SearchBar()),
+          preferredSize: Size.fromHeight(kToolbarHeight), child: yt_search.SearchBar()),
     );
   }
 

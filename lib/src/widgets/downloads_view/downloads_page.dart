@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -6,11 +9,49 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../providers.dart';
 
-class DownloadsPage extends HookConsumerWidget {
+class DownloadsPage extends StatefulHookConsumerWidget {
   const DownloadsPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState()  => _DownloadsPage();
+}
+
+class _DownloadsPage extends ConsumerState<DownloadsPage> {
+  late Timer refreshScreenTimer;
+  String signatureExistFiles = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Chargement d'un timer pour rafraîchir la page si un changement a lieu dans la liste
+    refreshScreenTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      final downloadManager = ref.watch(downloadProvider.state);
+      String signatureExistFilesWorking = '';
+
+      // get new signature: check if exist files in download folder
+      for (var video in downloadManager.state.videos) {
+        bool bValidPath = File(video.path).existsSync();
+        signatureExistFilesWorking += bValidPath.toString() + ';';
+      }
+
+      // check if new signature
+      if (signatureExistFiles != signatureExistFilesWorking) {
+        setState(() {
+          signatureExistFiles = signatureExistFilesWorking;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    refreshScreenTimer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final downloadManager = ref.watch(downloadProvider.state);
     useListenable(downloadManager.state);
 
@@ -79,7 +120,7 @@ class DownloadsAppBar extends HookConsumerWidget {
                     style: Theme
                         .of(context)
                         .textTheme
-                        .headline5,
+                        .headlineSmall,
                   ),
                 ),
               ],
