@@ -7,6 +7,7 @@ import 'package:youtube_downloader/src/widgets/search_view/playlists_list.dart';
 import 'package:youtube_downloader/src/widgets/search_view/streams_list.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
+import '../../helpers.dart';
 import '../models/query_video.dart';
 import '../search_bar.dart' as yt_search;
 import 'app_drawer.dart';
@@ -31,8 +32,9 @@ class _HomePageState extends State<HomePage> {
 
     // get auto clipboard
     Clipboard.getData(Clipboard.kTextPlain).then((cdata) {
-      if (cdata != null && cdata.text != null && (cdata.text!.toLowerCase().startsWith("https://www.youtube.com") || cdata.text!.toLowerCase().startsWith("https://youtu.be"))) {
-        urlController.text = url = cdata.text ?? "";
+      String _localUrl = convertYoutubeUrl(cdata?.text ?? "") ?? "";
+      if (_localUrl.isNotEmpty) {
+        urlController.text = url = _localUrl;
       }
     });
   }
@@ -95,8 +97,9 @@ class _HomePageState extends State<HomePage> {
 
                       // get clipboard
                       ClipboardData? cdata = await Clipboard.getData(Clipboard.kTextPlain);
-                      if (cdata != null && cdata.text != null && (cdata.text!.toLowerCase().startsWith("https://www.youtube.com") || cdata.text!.toLowerCase().startsWith("https://youtu.be"))) {
-                        urlController.text = url = cdata.text ?? "";
+                      String _localUrl = convertYoutubeUrl(cdata?.text ?? "") ?? "";
+                      if (_localUrl.isNotEmpty) {
+                        urlController.text = url = _localUrl;
                         await launchUrlStream(context);
                       }
                       else {
@@ -132,9 +135,18 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
+    // traduction de l'url
+    final String _localUrl = convertYoutubeUrl(url) ?? "";
+    if (_localUrl.isEmpty) {
+      urlController.text = "Not valid!";
+      url = "";
+      return;
+    }
+
     // processing
     setState(() {
       loadingStreams = true;
+      url = _localUrl;
     });
 
     try {
