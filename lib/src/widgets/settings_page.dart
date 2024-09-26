@@ -201,7 +201,7 @@ class SettingsAppBar extends HookWidget {
             Center(
               child: Text(
                 AppLocalizations.of(context)!.settings,
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
           ]),

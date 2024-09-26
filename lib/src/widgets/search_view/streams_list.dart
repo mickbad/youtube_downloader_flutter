@@ -212,7 +212,7 @@ class StreamsList extends HookConsumerWidget {
                         _formatDuration(video.duration),
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText1
+                            .bodyMedium
                             ?.copyWith(
                             fontSize: 11, color: Colors.white),
                       ),

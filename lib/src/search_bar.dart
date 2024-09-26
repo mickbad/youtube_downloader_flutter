@@ -25,7 +25,7 @@ class SearchBar extends HookWidget {
                 }),
             Text(
               'Youtube Downloader',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             Row(children: [
               IconButton(

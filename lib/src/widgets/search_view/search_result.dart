@@ -104,7 +104,7 @@ class LandscapeSearch extends HookWidget {
                                   _formatDuration(video.duration),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyMedium
                                       ?.copyWith(
                                           fontSize: 11, color: Colors.white),
                                 ),
@@ -117,7 +117,7 @@ class LandscapeSearch extends HookWidget {
                           video.title,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyMedium
                               ?.copyWith(fontSize: 15),
                           textAlign: TextAlign.start,
                           maxLines: 2,
@@ -135,7 +135,7 @@ class LandscapeSearch extends HookWidget {
                               '${AppLocalizations.of(context)!.author}: ${video.author}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1
+                                  .titleMedium
                                   ?.copyWith(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold),
@@ -154,7 +154,7 @@ class LandscapeSearch extends HookWidget {
                           padding: const EdgeInsets.only(left: 17),
                           child: AutoSizeText(
                               '${AppLocalizations.of(context)!.uploadDateRow}: ${video.uploadDateRaw}',
-                              style: Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 10),
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 10),
                               textAlign: TextAlign.start,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -240,7 +240,7 @@ class PortraitSearch extends StatelessWidget {
                               _formatDuration(video.duration),
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyMedium
                                   ?.copyWith(fontSize: 11, color: Colors.white),
                             ),
                           )),
@@ -251,7 +251,7 @@ class PortraitSearch extends StatelessWidget {
                     video.title,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText1
+                        .bodyMedium
                         ?.copyWith(fontSize: 15),
                     textAlign: TextAlign.start,
                     onTap: () {
@@ -265,7 +265,7 @@ class PortraitSearch extends StatelessWidget {
                     video.author,
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1
+                        .titleMedium
                         ?.copyWith(fontSize: 13),
                   ),
 
@@ -275,7 +275,7 @@ class PortraitSearch extends StatelessWidget {
                     video.uploadDateRaw ?? "",
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1
+                        .titleMedium
                         ?.copyWith(fontSize: 10),
                   ),
                   const SizedBox(height: 4),
