@@ -4,6 +4,9 @@
   "searchUrl": "Download URL",
   "searchUrlTooltip": "Paste your URL from clipboard",
 
+  "ok": "OK",
+  "cancel": "Cancelar",
+
   "settings": "Configurações",
   "darkMode": "Modo Noturno",
   "ffmpegPath": "FFMPEG path localisation",
@@ -17,17 +20,23 @@
   "credits": "Application credits",
   "credits_content": "Graphics: https://www.flaticon.com/authors/freepik\nOriginal Author: https://github.com/Hexer10\nModified: https://github.com/mickbad",
 
-  "downloads": "Downloads",
+  "downloads": "Transferências",
   "author": "Autor",
-  "uploadDateRow": "Published",
+  "uploadDateRow": "Publicada",
 
-  "tracksTooltip": "Tap on line to download stream or long tap to select stream for merge",
-  "mergeTracks": "Download & Merge tracks!",
-  "tracksBestMerge": "Best video + audio quality",
-  "tracksAll": "All",
-  "tracksVideoAudio": "Video + Audio",
-  "tracksVideo": "Video Only",
-  "tracksAudio": "Audio Only",
+  "downloadCleanUpList": "Lista limpa (sem eliminação)",
+  "downloadCleanUpListConfirm": "Quer mesmo limpar a lista de downloads?",
+
+  "navigateToDownloadPage": "Página de download",
+  "navigateToDownloadPageConfirm": "Quer navegar até à página de download?",
+
+  "tracksTooltip": "Toque na linha para descarregar o fluxo ou toque longo para selecionar o fluxo a fundir",
+  "mergeTracks": "Descarregue e mescle faixas!",
+  "tracksBestMerge": "Melhor qualidade de vídeo + áudio",
+  "tracksAll": "Tudo",
+  "tracksVideoAudio": "Vídeo + Áudio",
+  "tracksVideo": "Somente vídeo",
+  "tracksAudio": "Somente áudio",
 
   "permissionError": "O applicativo precisa ter acesso ao seu armazenamento para realizar seus downloads!",
 

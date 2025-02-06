@@ -4,6 +4,9 @@
   "searchUrl": "下载网址",
   "searchUrlTooltip": "从剪贴板粘贴网址",
 
+  "ok": "确定 (OK)",
+  "cancel": "取消",
+
   "settings": "设定",
   "darkMode": "神色主题",
   "ffmpegPath": "FFMPEG路径位置",
@@ -22,6 +25,10 @@
   "uploadDateRow": "发表",
 
   "downloadCleanUpList": "整理下载目录（无删除文件）",
+  "downloadCleanUpListConfirm": "确定清理下载目录吗？",
+
+  "navigateToDownloadPage": "下载页面",
+  "navigateToDownloadPageConfirm": "您想导航至下载页面吗？",
 
   "tracksTooltip": "敲排为下载流程，或者长按排多种流程为合并",
   "mergeTracks": "下载和合并轨！",

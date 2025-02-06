@@ -4,6 +4,9 @@
   "searchUrl": "Download l'URL",
   "searchUrlTooltip": "Incolla la tua URL dal appunti",
 
+  "ok": "OK",
+  "cancel": "Annulla",
+
   "settings": "Impostazioni",
   "darkMode": "Modalità scura",
   "ffmpegPath": "Percorso del FFMPEG",
@@ -24,6 +27,10 @@
   "uploadDateRow": "Pubblicato",
 
   "downloadCleanUpList": "Lista delle download pulita (nessuna cancellamento)",
+  "downloadCleanUpListConfirm": "Cancellare la lista delle download?",
+
+  "navigateToDownloadPage": "Scarica la pagina",
+  "navigateToDownloadPageConfirm": "Vuoi andare alla pagina di download?",
 
   "tracksTooltip": "Tocca sulla linea per download il stream, o premere a lungo per selezionare più stream",
   "mergeTracks": "Download i Unire le tracce!",

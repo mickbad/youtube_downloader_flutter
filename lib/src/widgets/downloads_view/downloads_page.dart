@@ -76,7 +76,7 @@ class _DownloadsPage extends ConsumerState<DownloadsPage> {
 }
 
 class DownloadsAppBar extends HookConsumerWidget {
-  const DownloadsAppBar({Key? key}) : super(key: key);
+  const DownloadsAppBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -106,47 +106,69 @@ class DownloadsAppBar extends HookConsumerWidget {
         child: Container(
           padding: const EdgeInsets.only(left: 10),
           height: kToolbarHeight,
-          child: Row(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.of(context).pop()),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.of(context).pop()),
 
-                Center(
-                  child: Text(
-                    AppLocalizations.of(context)!.downloads,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headlineSmall,
+                  Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.downloads,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headlineSmall,
+                    ),
                   ),
+                ],
+              ),
+
+              if (downloadManager.state.videos.isNotEmpty) ...[
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: (downloadManager.state.videos.isEmpty)
+                        ? Colors.grey
+                        : Colors.blueAccent,
+                    padding: const EdgeInsets.all(10),
+                  ),
+                  onPressed: () async {
+                    // check
+                    if (downloadManager.state.videos.isEmpty) {
+                      return;
+                    }
+
+                    // show dialog
+                    await showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text(AppLocalizations.of(context)!.downloadCleanUpList),
+                        content: Text(AppLocalizations.of(context)!.downloadCleanUpListConfirm),
+                        actions: [
+                          TextButton(
+                            child: Text(AppLocalizations.of(context)!.cancel),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                          TextButton(
+                            child: Text(AppLocalizations.of(context)!.ok),
+                            onPressed: () {
+                              // clean
+                              downloadManager.state.removeAllVideos(forceDelete: false);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  child: cleanUpButtonElement,
                 ),
               ],
-            ),
-
-            if (downloadManager.state.videos.isNotEmpty)
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: (downloadManager.state.videos.isEmpty)
-                      ? Colors.grey
-                      : Colors.blueAccent,
-                  padding: const EdgeInsets.all(10),
-                ),
-                onPressed: () async {
-                  // check
-                  if (downloadManager.state.videos.isEmpty) {
-                    return;
-                  }
-
-                  // clean
-                  await downloadManager.state.removeAllVideos(forceDelete: false);
-                },
-                child: cleanUpButtonElement,
-              ),
-          ],
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ],
           ),
         ),
       ),

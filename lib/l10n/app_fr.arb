@@ -4,6 +4,9 @@
   "searchUrl": "Télécharger l'URL",
   "searchUrlTooltip": "Coller votre url depuis le presse papier",
 
+  "ok": "OK",
+  "cancel": "Annuler",
+
   "settings": "Paramètres",
   "darkMode": "Mode nuit",
   "ffmpegPath": "Chemin d'accès à FFMPEG",
@@ -22,6 +25,10 @@
   "uploadDateRow": "Publication",
 
   "downloadCleanUpList": "Nettoyer la liste (aucune suppression)",
+  "downloadCleanUpListConfirm": "Voulez-vous vraiment nettoyer la liste de téléchargements ?",
+
+  "navigateToDownloadPage": "Page des téléchargements",
+  "navigateToDownloadPageConfirm": "Voulez-vous naviguer vers la page des téléchargements ?",
 
   "tracksTooltip": "Tapez sur une ligne pour télécharger ou un appui long pour sélectionner la fusion",
   "mergeTracks": "Télécharger et fusionner les pistes !",

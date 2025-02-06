@@ -11,6 +11,7 @@ import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../../providers.dart';
 import '../../shared.dart';
+import '../downloads_view/downloads_page.dart';
 
 class StreamsList extends HookConsumerWidget {
   final QueryVideo video;
@@ -57,7 +58,8 @@ class StreamsList extends HookConsumerWidget {
           onPressed: () async {
             // close window
             if (!isMergeWanted) {
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
+              choiceActionAndClose(context);
             }
 
             // download
@@ -89,7 +91,8 @@ class StreamsList extends HookConsumerWidget {
           onPressed: () async {
             // close window
             if (!isMergeWanted) {
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
+              choiceActionAndClose(context);
             }
 
             // download
@@ -122,7 +125,8 @@ class StreamsList extends HookConsumerWidget {
           onPressed: () async {
             // close window
             if (!isMergeWanted) {
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
+              choiceActionAndClose(context);
             }
 
             // download
@@ -264,7 +268,8 @@ class StreamsList extends HookConsumerWidget {
                 await downloadManager.state.downloadStream(yt, video, settings.state,
                     StreamType.video, AppLocalizations.of(context)!,
                     merger: merger, ffmpegContainer: settings.state.ffmpegContainer);
-                Navigator.of(context).pop();
+                // Navigator.of(context).pop();
+                choiceActionAndClose(context);
               },
               child: Text(AppLocalizations.of(context)!.mergeTracks)),
         DropdownButton<Filter>(
@@ -306,6 +311,41 @@ class StreamsList extends HookConsumerWidget {
       case Filter.video:
         return manifest.videoOnly.toList(growable: false);
     }
+  }
+
+  ///
+  /// Function to display user choice to display download progress
+  /// with dialog show
+  ///
+  void choiceActionAndClose(BuildContext context) {
+    // close streams window
+    Navigator.of(context).pop();
+
+    // show dialog (no wait)
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.navigateToDownloadPage),
+        content: Text(AppLocalizations.of(context)!.navigateToDownloadPageConfirm),
+        actions: [
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.cancel),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.ok),
+            onPressed: () {
+              // close dialog
+              Navigator.of(context).pop();
+
+              // goto download page
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const DownloadsPage()));
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 
