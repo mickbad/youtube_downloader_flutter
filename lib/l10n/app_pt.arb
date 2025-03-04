@@ -45,7 +45,8 @@
     "placeholders": {
       "title": {
         "example": "Melhor vídeo de todos",
-        "description": "Título do vídeo"
+        "description": "Título do vídeo",
+        "type": "Object"
       }
     }
   },
@@ -55,7 +56,8 @@
     "placeholders": {
       "title": {
         "example": "Melhor vídeo de todos",
-        "description": "Título do vídeo"
+        "description": "Título do vídeo",
+        "type": "Object"
       }
     }
   },
@@ -65,7 +67,8 @@
     "placeholders": {
       "title": {
         "example": "Melhor vídeo de todos",
-        "description": "Título do vídeo"
+        "description": "Título do vídeo",
+        "type": "Object"
       }
     }
   },
@@ -75,7 +78,8 @@
     "placeholders": {
       "title": {
         "example": "Melhor vídeo de todos",
-        "description": "Título do vídeo"
+        "description": "Título do vídeo",
+        "type": "Object"
       }
     }
   },
@@ -85,7 +89,8 @@
     "placeholders": {
       "title": {
         "example": "Melhor vídeo de todos",
-        "description": "Título do vídeo"
+        "description": "Título do vídeo",
+        "type": "Object"
       }
     }
   },
@@ -95,7 +100,8 @@
     "placeholders": {
       "title": {
         "example": "Melhor vídeo de todos",
-        "description": "Título do vídeo"
+        "description": "Título do vídeo",
+        "type": "Object"
       }
     }
   },
@@ -105,7 +111,8 @@
     "placeholders": {
       "title": {
         "example": "Melhor vídeo de todos",
-        "description": "Título do vídeo"
+        "description": "Título do vídeo",
+        "type": "Object"
       }
     }
   },
@@ -115,7 +122,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   }

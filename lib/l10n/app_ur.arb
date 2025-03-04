@@ -25,7 +25,8 @@
     "placeholders": {
       "title": {
         "example": "اب تک کی بہترین ویڈیو",
-        "description": "ویڈیو کا عنوان"
+        "description": "ویڈیو کا عنوان",
+        "type": "Object"
       }
     }
   },
@@ -35,7 +36,8 @@
     "placeholders": {
       "title": {
         "example": "اب تک کی بہترین ویڈیو",
-        "description": "ویڈیو کا عنوان"
+        "description": "ویڈیو کا عنوان",
+        "type": "Object"
       }
     }
   },
@@ -45,7 +47,8 @@
     "placeholders": {
       "title": {
         "example": "اب تک کی بہترین ویڈیو",
-        "description": "ویڈیو کا عنوان"
+        "description": "ویڈیو کا عنوان",
+        "type": "Object"
       }
     }
   },
@@ -55,7 +58,8 @@
     "placeholders": {
       "title": {
         "example": "اب تک کی بہترین ویڈیو",
-        "description": "ویڈیو کا عنوان"
+        "description": "ویڈیو کا عنوان",
+        "type": "Object"
       }
     }
   },
@@ -65,7 +69,8 @@
     "placeholders": {
       "title": {
         "example": "اب تک کی بہترین ویڈیو",
-        "description": "ویڈیو کا عنوان"
+        "description": "ویڈیو کا عنوان",
+        "type": "Object"
       }
     }
   },
@@ -75,7 +80,8 @@
     "placeholders": {
       "title": {
         "example": "اب تک کی بہترین ویڈیو",
-        "description": "ویڈیو کا عنوان"
+        "description": "ویڈیو کا عنوان",
+        "type": "Object"
       }
     }
   },
@@ -85,7 +91,8 @@
     "placeholders": {
       "title": {
         "example": "اب تک کی بہترین ویڈیو",
-        "description": "ویڈیو کا عنوان"
+        "description": "ویڈیو کا عنوان",
+        "type": "Object"
       }
     }
   },
@@ -95,7 +102,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   }

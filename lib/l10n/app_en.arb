@@ -50,7 +50,8 @@
     "placeholders": {
       "percent": {
         "example": "29",
-        "description": "Scan percent"
+        "description": "Scan percent",
+        "type": "Object"
       }
     }
   },
@@ -60,7 +61,8 @@
     "placeholders": {
       "count": {
         "example": "29",
-        "description": "Videos count"
+        "description": "Videos count",
+        "type": "Object"
       }
     }
   },
@@ -80,7 +82,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   },
@@ -90,7 +93,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   },
@@ -100,7 +104,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   },
@@ -110,7 +115,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   },
@@ -120,7 +126,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   },
@@ -130,7 +137,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   },
@@ -140,7 +148,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   },
@@ -150,7 +159,8 @@
     "placeholders": {
       "title": {
         "example": "Best video ever",
-        "description": "Video title"
+        "description": "Video title",
+        "type": "Object"
       }
     }
   }

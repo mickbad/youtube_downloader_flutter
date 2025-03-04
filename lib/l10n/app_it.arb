@@ -52,7 +52,8 @@
     "placeholders": {
       "percent": {
         "example": "29",
-        "description": "Percento dello scan"
+        "description": "Percento dello scan",
+        "type": "Object"
       }
     }
   },
@@ -62,7 +63,8 @@
     "placeholders": {
       "count": {
         "example": "29",
-        "description": "Numero di video"
+        "description": "Numero di video",
+        "type": "Object"
       }
     }
   },
@@ -80,7 +82,8 @@
     "placeholders": {
       "title": {
         "example": "Nuovo video!",
-        "description": "Titolo del video"
+        "description": "Titolo del video",
+        "type": "Object"
       }
     }
   },
@@ -90,7 +93,8 @@
     "placeholders": {
       "title": {
         "example": "Nuovo video!",
-        "description": "Titolo del video"
+        "description": "Titolo del video",
+        "type": "Object"
       }
     }
   },
@@ -100,7 +104,8 @@
     "placeholders": {
       "title": {
         "example": "Nuovo video!",
-        "description": "Titolo del video"
+        "description": "Titolo del video",
+        "type": "Object"
       }
     }
   },
@@ -110,7 +115,8 @@
     "placeholders": {
       "title": {
         "example": "Nuovo video!",
-        "description": "Titolo del video"
+        "description": "Titolo del video",
+        "type": "Object"
       }
     }
   },
@@ -120,7 +126,8 @@
     "placeholders": {
       "title": {
         "example": "Nuovo video!",
-        "description": "Titolo del video"
+        "description": "Titolo del video",
+        "type": "Object"
       }
     }
   },
@@ -130,7 +137,8 @@
     "placeholders": {
       "title": {
         "example": "Nuovo video!",
-        "description": "Titolo del video"
+        "description": "Titolo del video",
+        "type": "Object"
       }
     }
   },
@@ -140,7 +148,8 @@
     "placeholders": {
       "title": {
         "example": "Nuovo video!",
-        "description": "Titolo del video"
+        "description": "Titolo del video",
+        "type": "Object"
       }
     }
   },
@@ -150,7 +159,8 @@
     "placeholders": {
       "title": {
         "example": "Nuovo video!",
-        "description": "Titolo del video"
+        "description": "Titolo del video",
+        "type": "Object"
       }
     }
   }
