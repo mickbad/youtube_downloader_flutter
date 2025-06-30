@@ -6,8 +6,8 @@ import 'package:id3_codec/id3_encoder.dart';
 import 'package:id3tag/id3tag.dart';
 import 'package:youtube_downloader/src/models/settings.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../l10n/app_localizations.dart';
 import 'download_manager.dart';
 
 

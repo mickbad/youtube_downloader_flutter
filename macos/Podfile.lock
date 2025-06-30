@@ -1,10 +1,8 @@
 PODS:
-  - ffmpeg-kit-macos-full-gpl (5.1)
-  - ffmpeg_kit_flutter_full_gpl (5.1.0):
-    - ffmpeg_kit_flutter_full_gpl/full-gpl (= 5.1.0)
+  - ffmpeg_kit_flutter_new (1.0.0):
+    - ffmpeg_kit_flutter_new/full-gpl (= 1.0.0)
     - FlutterMacOS
-  - ffmpeg_kit_flutter_full_gpl/full-gpl (5.1.0):
-    - ffmpeg-kit-macos-full-gpl (= 5.1)
+  - ffmpeg_kit_flutter_new/full-gpl (1.0.0):
     - FlutterMacOS
   - file_picker (0.0.1):
     - FlutterMacOS
@@ -23,7 +21,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
-  - ffmpeg_kit_flutter_full_gpl (from `Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_full_gpl/macos`)
+  - ffmpeg_kit_flutter_new (from `Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_new/macos`)
   - file_picker (from `Flutter/ephemeral/.symlinks/plugins/file_picker/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - open_file_mac (from `Flutter/ephemeral/.symlinks/plugins/open_file_mac/macos`)
@@ -32,13 +30,9 @@ DEPENDENCIES:
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
   - window_size (from `Flutter/ephemeral/.symlinks/plugins/window_size/macos`)
 
-SPEC REPOS:
-  trunk:
-    - ffmpeg-kit-macos-full-gpl
-
 EXTERNAL SOURCES:
-  ffmpeg_kit_flutter_full_gpl:
-    :path: Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_full_gpl/macos
+  ffmpeg_kit_flutter_new:
+    :path: Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_new/macos
   file_picker:
     :path: Flutter/ephemeral/.symlinks/plugins/file_picker/macos
   FlutterMacOS:
@@ -55,8 +49,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/window_size/macos
 
 SPEC CHECKSUMS:
-  ffmpeg-kit-macos-full-gpl: 13b2ae9d0189535dd4566a73354ff62624a723e9
-  ffmpeg_kit_flutter_full_gpl: 4692cad8285a8ce169bc19535b12374fd0407d80
+  ffmpeg_kit_flutter_new: ba31edb57dbc09d35cabc7df23e0dc876c525946
   file_picker: e716a70a9fe5fd9e09ebc922d7541464289443af
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   open_file_mac: 0e554648e2a87ce59e9438e3e5ca3e552e90d89a

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:youtube_downloader/src/widgets/search_view/playlists_list.dart';
 import 'package:youtube_downloader/src/widgets/search_view/streams_list.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../../helpers.dart';
+import '../../l10n/app_localizations.dart';
 import '../models/query_video.dart';
 import '../search_bar.dart' as yt_search;
 import 'app_drawer.dart';
