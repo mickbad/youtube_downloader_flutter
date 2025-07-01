@@ -26,13 +26,13 @@ class _DownloadsPage extends ConsumerState<DownloadsPage> {
 
     // Chargement d'un timer pour rafraîchir la page si un changement a lieu dans la liste
     refreshScreenTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      final downloadManager = ref.watch(downloadProvider.state);
+      final downloadManager = ref.watch(downloadProvider);
       String signatureExistFilesWorking = '';
 
       // get new signature: check if exist files in download folder
-      for (var video in downloadManager.state.videos) {
+      for (var video in downloadManager.videos) {
         bool bValidPath = File(video.path).existsSync();
-        signatureExistFilesWorking += bValidPath.toString() + ';';
+        signatureExistFilesWorking += '$bValidPath;';
       }
 
       // check if new signature
@@ -52,10 +52,10 @@ class _DownloadsPage extends ConsumerState<DownloadsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final downloadManager = ref.watch(downloadProvider.state);
-    useListenable(downloadManager.state);
+    final downloadManager = ref.watch(downloadProvider);
+    useListenable(downloadManager);
 
-    final length = downloadManager.state.videos.length;
+    final length = downloadManager.videos.length;
 
     return Scaffold(
       appBar: const PreferredSize(
@@ -67,7 +67,7 @@ class _DownloadsPage extends ConsumerState<DownloadsPage> {
         ),
         itemCount: length,
         itemBuilder: (BuildContext context, int index) {
-          final video = downloadManager.state.videos[(length - 1) - index];
+          final video = downloadManager.videos[(length - 1) - index];
           return DownloadTile(video);
         },
       ),
@@ -80,8 +80,8 @@ class DownloadsAppBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final downloadManager = ref.watch(downloadProvider.state);
-    useListenable(downloadManager.state);
+    final downloadManager = ref.watch(downloadProvider);
+    useListenable(downloadManager);
 
     // create cleanup button
     Widget cleanUpButtonElement;
@@ -128,17 +128,17 @@ class DownloadsAppBar extends HookConsumerWidget {
                 ],
               ),
 
-              if (downloadManager.state.videos.isNotEmpty) ...[
+              if (downloadManager.videos.isNotEmpty) ...[
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: (downloadManager.state.videos.isEmpty)
+                    foregroundColor: (downloadManager.videos.isEmpty)
                         ? Colors.grey
                         : Colors.blueAccent,
                     padding: const EdgeInsets.all(10),
                   ),
                   onPressed: () async {
                     // check
-                    if (downloadManager.state.videos.isEmpty) {
+                    if (downloadManager.videos.isEmpty) {
                       return;
                     }
 
@@ -157,7 +157,7 @@ class DownloadsAppBar extends HookConsumerWidget {
                             child: Text(AppLocalizations.of(context)!.ok),
                             onPressed: () {
                               // clean
-                              downloadManager.state.removeAllVideos(forceDelete: false);
+                              downloadManager.removeAllVideos(forceDelete: false);
                               Navigator.of(context).pop();
                             },
                           ),

@@ -6,9 +6,13 @@ PODS:
     - FlutterMacOS
   - file_picker (0.0.1):
     - FlutterMacOS
+  - flutter_inappwebview_macos (0.0.1):
+    - FlutterMacOS
+    - OrderedSet (~> 6.0.3)
   - FlutterMacOS (1.0.0)
   - open_file_mac (0.0.1):
     - FlutterMacOS
+  - OrderedSet (6.0.3)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -23,6 +27,7 @@ PODS:
 DEPENDENCIES:
   - ffmpeg_kit_flutter_new (from `Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_new/macos`)
   - file_picker (from `Flutter/ephemeral/.symlinks/plugins/file_picker/macos`)
+  - flutter_inappwebview_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - open_file_mac (from `Flutter/ephemeral/.symlinks/plugins/open_file_mac/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
@@ -30,11 +35,17 @@ DEPENDENCIES:
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
   - window_size (from `Flutter/ephemeral/.symlinks/plugins/window_size/macos`)
 
+SPEC REPOS:
+  trunk:
+    - OrderedSet
+
 EXTERNAL SOURCES:
   ffmpeg_kit_flutter_new:
     :path: Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_new/macos
   file_picker:
     :path: Flutter/ephemeral/.symlinks/plugins/file_picker/macos
+  flutter_inappwebview_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview_macos/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   open_file_mac:
@@ -51,8 +62,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   ffmpeg_kit_flutter_new: ba31edb57dbc09d35cabc7df23e0dc876c525946
   file_picker: e716a70a9fe5fd9e09ebc922d7541464289443af
+  flutter_inappwebview_macos: bdf207b8f4ebd58e86ae06cd96b147de99a67c9b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   open_file_mac: 0e554648e2a87ce59e9438e3e5ca3e552e90d89a
+  OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   url_launcher_macos: c82c93949963e55b228a30115bd219499a6fe404

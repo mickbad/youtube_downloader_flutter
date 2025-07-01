@@ -45,6 +45,8 @@
   "trackID3FieldAlbum": "Album",
   "trackID3Action": "Appliquez",
 
+  "trackAITooltip": "Analysez votre audio avec la transcription",
+
   "playlistParsing": "Lecture de la playlist : {percent} %",
   "@playlistParsing": {
     "placeholders": {

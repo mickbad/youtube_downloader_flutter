@@ -124,6 +124,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get trackID3Action => '储存';
 
   @override
+  String get trackAITooltip => 'Get your transcription from your audio';
+
+  @override
   String playlistParsing(Object percent) {
     return '播放列表分析处理：$percent%';
   }
@@ -319,6 +322,9 @@ class AppLocalizationsZhTc extends AppLocalizationsZh {
 
   @override
   String get trackID3Action => '儲存';
+
+  @override
+  String get trackAITooltip => 'Get your transcription from your audio';
 
   @override
   String playlistParsing(Object percent) {

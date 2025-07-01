@@ -45,6 +45,8 @@
   "trackID3FieldAlbum": "專輯",
   "trackID3Action": "儲存",
 
+  "trackAITooltip": "Get your transcription from your audio",
+
   "playlistParsing": "播放列表分析處理：{percent}%",
   "@playlistParsing": {
     "placeholders": {

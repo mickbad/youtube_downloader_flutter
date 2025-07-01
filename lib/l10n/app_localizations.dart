@@ -335,6 +335,12 @@ abstract class AppLocalizations {
   /// **'Update'**
   String get trackID3Action;
 
+  /// No description provided for @trackAITooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Get your transcription from your audio'**
+  String get trackAITooltip;
+
   /// No description provided for @playlistParsing.
   ///
   /// In en, this message translates to:

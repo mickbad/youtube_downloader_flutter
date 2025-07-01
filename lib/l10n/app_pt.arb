@@ -38,6 +38,8 @@
   "tracksVideo": "Somente vídeo",
   "tracksAudio": "Somente áudio",
 
+  "trackAITooltip": "Get your transcription from your audio",
+
   "permissionError": "O applicativo precisa ter acesso ao seu armazenamento para realizar seus downloads!",
 
   "startDownload": "Iniciando download: {title}",

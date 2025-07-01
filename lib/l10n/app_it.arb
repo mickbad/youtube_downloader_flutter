@@ -47,6 +47,8 @@
   "trackID3FieldAlbum": "Album",
   "trackID3Action": "Salva",
 
+  "trackAITooltip": "Get your transcription from your audio",
+
   "playlistParsing": "Riproducendo la playlist: {percent} %",
   "@playlistParsing": {
     "placeholders": {

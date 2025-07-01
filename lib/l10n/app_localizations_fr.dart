@@ -129,6 +129,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get trackID3Action => 'Appliquez';
 
   @override
+  String get trackAITooltip => 'Analysez votre audio avec la transcription';
+
+  @override
   String playlistParsing(Object percent) {
     return 'Lecture de la playlist : $percent %';
   }

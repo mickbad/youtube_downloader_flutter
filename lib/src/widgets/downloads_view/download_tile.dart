@@ -10,6 +10,7 @@ import 'package:youtube_downloader/src/providers.dart';
 import 'package:youtube_downloader/src/widgets/downloads_view/download_id3tag.dart';
 
 import '../../../l10n/app_localizations.dart';
+import 'download_transcriptions.dart';
 
 class DownloadTile extends HookWidget {
   final SingleTrack video;
@@ -49,27 +50,28 @@ class DownloadTile extends HookWidget {
     // check if path is valid
     final bValidPath = File(video.path).existsSync();
     return ListTile(
-        onTap:
-            video.downloadStatus == DownloadStatus.success && bValidPath ? _openFile : null,
-        title: Text(video.title,
-            style: video.downloadStatus == DownloadStatus.canceled ||
-                    video.downloadStatus == DownloadStatus.failed ||
-                    (!bValidPath && video.downloadStatus != DownloadStatus.downloading)
-                ? TextStyle(
-                    decoration: TextDecoration.lineThrough,
-                    color: Colors.grey.withOpacity(0.7)
-                  )
-                : null),
-        subtitle: video.downloadStatus == DownloadStatus.failed
-            ? Text(video.error)
-            : Text(video.path,
-                style: video.downloadStatus == DownloadStatus.canceled ||
-                        video.downloadStatus == DownloadStatus.failed ||
-                        (!bValidPath && video.downloadStatus != DownloadStatus.downloading)
-                    ? TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey.withOpacity(0.7))
-                    : null),
-        trailing: TrailingIcon(video),
-        leading: LeadingIcon(video));
+      onTap:
+          video.downloadStatus == DownloadStatus.success && bValidPath ? _openFile : null,
+      title: Text(video.title,
+          style: video.downloadStatus == DownloadStatus.canceled ||
+                  video.downloadStatus == DownloadStatus.failed ||
+                  (!bValidPath && video.downloadStatus != DownloadStatus.downloading)
+              ? TextStyle(
+                  decoration: TextDecoration.lineThrough,
+                  color: Colors.grey.withOpacity(0.7)
+                )
+              : null),
+      subtitle: video.downloadStatus == DownloadStatus.failed
+          ? Text(video.error)
+          : Text(video.path,
+              style: video.downloadStatus == DownloadStatus.canceled ||
+                      video.downloadStatus == DownloadStatus.failed ||
+                      (!bValidPath && video.downloadStatus != DownloadStatus.downloading)
+                  ? TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey.withOpacity(0.7))
+                  : null),
+      trailing: TrailingIcon(video),
+      leading: LeadingIcon(video),
+    );
   }
 
   Future<void> _openFile() async {
@@ -112,13 +114,13 @@ class TrailingIcon extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final downloadManager = ref.watch(downloadProvider.state);
+    final downloadManager = ref.watch(downloadProvider);
     final bValidPath = File(video.path).existsSync();
     if (!bValidPath) {
       return IconButton(
           icon: const Icon(Icons.delete_forever),
           onPressed: () async {
-            downloadManager.state.removeVideo(video);
+            downloadManager.removeVideo(video);
           });
     }
 
@@ -131,9 +133,14 @@ class TrailingIcon extends HookConsumerWidget {
             });
       case DownloadStatus.success:
           // change id3tag for mp3
-          Widget id3tagChange = Container();
+          Widget id3tagChange = SizedBox.shrink();
+
+          // icône d'analyse de l'item par IA
+          Widget iaIconButton = SizedBox.shrink();
+
+          // remplissage
           if (video.streamType == StreamType.audio && video.path.toLowerCase().endsWith('.mp3')) {
-            id3tagChange =  IconButton(
+            id3tagChange = IconButton(
               icon: const Icon(Icons.edit),
               tooltip: AppLocalizations.of(context)!.trackID3EditTooltip,
               onPressed: () async {
@@ -142,26 +149,41 @@ class TrailingIcon extends HookConsumerWidget {
                 if (myvideo != null) {
                   showDialog(context: context, builder: (context) => DownloadId3Tag(myvideo));
                 }
-              });
+              },
+            );
+
+            iaIconButton = IconButton(
+              icon: Image.asset("assets/images/etoiles_ia_couleur.png"),
+              tooltip: AppLocalizations.of(context)!.trackAITooltip,
+              onPressed: () async {
+                QueryVideo? myvideo = await QueryVideo.getId3Tag(video.path);
+                if (myvideo != null) {
+                  // affichage de la webview
+                  showDialog(context: context,
+                      builder: (context) => DownloadTranscriptions(myvideo));
+                }
+              },
+            );
           }
 
           return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            id3tagChange,
-            IconButton(
-                icon: const Icon(Icons.folder_open),
-                onPressed: () async {
-                  final res = await OpenFile.open(path.dirname(video.path));
-                  debugPrint('R: ${res.type} | M: ${res.message}');
-                }),
-            IconButton(
-                icon: const Icon(Icons.delete_forever, color: Color.fromRGBO(250, 0, 0, 0.6),),
-                onPressed: () async {
-                  downloadManager.state.removeVideo(video);
-                }),
-          ],
-        );
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              iaIconButton,
+              id3tagChange,
+              IconButton(
+                  icon: const Icon(Icons.folder_open),
+                  onPressed: () async {
+                    final res = await OpenFile.open(path.dirname(video.path));
+                    debugPrint('R: ${res.type} | M: ${res.message}');
+                  }),
+              IconButton(
+                  icon: const Icon(Icons.delete_forever, color: Color.fromRGBO(250, 0, 0, 0.6),),
+                  onPressed: () async {
+                    downloadManager.removeVideo(video);
+                  }),
+            ],
+          );
       case DownloadStatus.muxing:
         return IconButton(
             icon: const Icon(Icons.cancel),
@@ -173,7 +195,7 @@ class TrailingIcon extends HookConsumerWidget {
         return IconButton(
             icon: const Icon(Icons.delete_forever),
             onPressed: () async {
-              downloadManager.state.removeVideo(video);
+              downloadManager.removeVideo(video);
             });
     }
   }
