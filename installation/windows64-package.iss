@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "YoutubeDownloader"
-#define MyAppVersion "1.3.10"
+#define MyAppVersion "1.4.11"
 #define MyAppPublisher "Hexer10 - MickBad"
 #define MyAppURL "https://github.com/Hexer10/youtube_downloader_flutter"
 #define MyAppExeName "youtube_downloader.exe"
@@ -28,6 +28,7 @@ SetupIconFile=..\assets\icons\applications\app_icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+PrivilegesRequired=lowest
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
