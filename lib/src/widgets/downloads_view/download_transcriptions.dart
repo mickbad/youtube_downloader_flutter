@@ -10,6 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:slugify/slugify.dart';
 import 'package:youtube_downloader/src/models/query_video.dart';
 
@@ -61,7 +62,7 @@ class _DownloadTranscriptionsPage extends ConsumerState<DownloadTranscriptions> 
       ),
       content: SizedBox(
         width: double.maxFinite,
-        height: double.maxFinite,
+        height: MediaQuery.of(context).size.height * .7,
         child: Column(
           children: [
             // tips
@@ -73,7 +74,7 @@ class _DownloadTranscriptionsPage extends ConsumerState<DownloadTranscriptions> 
             // moteur de l'analyse
             SizedBox(
               width: double.maxFinite,
-              height: MediaQuery.of(context).size.height * .8,
+              height: MediaQuery.of(context).size.height * .6,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: browser,
@@ -129,6 +130,7 @@ class _DownloadTranscriptionsPage extends ConsumerState<DownloadTranscriptions> 
         isFraudulentWebsiteWarningEnabled: true,
         javaScriptEnabled: true,
         javaScriptCanOpenWindowsAutomatically: true,
+        disableContextMenu: true,
       ),
 
       ///
@@ -223,14 +225,34 @@ class _DownloadTranscriptionsPage extends ConsumerState<DownloadTranscriptions> 
       final fileName = "${slugify("${fileNameFromURL.replaceAll(fileExtension, "")} ${widget.video.title}")}.$fileExtension";
 
       // Choisir l'emplacement et le nom du fichier
-      final savePath = await FilePicker.platform.saveFile(
-        dialogTitle: AppLocalizations.of(context)!.downloads,
-        fileName: fileName,
-        type: FileType.custom,
-        allowedExtensions: [fileExtension],
-      );
+      late String savePath;
+      if (Platform.isAndroid || Platform.isIOS) {
+        // Utiliser le dossier "Download"
+        Directory? directory;
+        if (Platform.isAndroid) {
+          directory = Directory('/storage/emulated/0/Download');
+          if (!await directory.exists()) {
+            directory = await getExternalStorageDirectory();
+          }
+        } else {
+          directory = await getApplicationDocumentsDirectory();
+        }
 
-      if (savePath == null) {
+        savePath = '${directory!.path}/$fileName';
+      } else {
+        // Desktop : demander où enregistrer
+        final pickedPath = await FilePicker.platform.saveFile(
+          dialogTitle: AppLocalizations.of(context)!.downloads,
+          fileName: fileName,
+          type: FileType.custom,
+          allowedExtensions: [fileExtension],
+        );
+
+        if (pickedPath == null) return;
+        savePath = pickedPath;
+      }
+
+      if (savePath.isEmpty) {
         return;
       }
 

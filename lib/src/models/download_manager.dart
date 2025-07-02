@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_session.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:flutter/foundation.dart';
@@ -142,9 +143,24 @@ class DownloadManagerImpl extends ChangeNotifier implements DownloadManager {
             merger.audio != null &&
             ffmpegContainer != null);
 
-    if (Platform.isAndroid || Platform.isIOS) {
+    if (Platform.isAndroid) {
+      // src: https://stackoverflow.com/questions/75290497/storage-permission-request-not-working-in-flutter
+      final plugin = DeviceInfoPlugin();
+      final android = await plugin.androidInfo;
+
+      final req = android.version.sdkInt < 33
+          ? await Permission.storage.request()
+          : PermissionStatus.granted;
+
+      if (!req.isGranted ) {
+        showSnackbar(SnackBar(content: Text(localizations.permissionError)));
+        return;
+      }
+    }
+
+    else if (Platform.isIOS) {
       final req = await Permission.storage.request();
-      if (!req.isGranted) {
+      if (!req.isGranted ) {
         showSnackbar(SnackBar(content: Text(localizations.permissionError)));
         return;
       }
