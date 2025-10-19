@@ -48,7 +48,8 @@ dependencies:
 
   flutter_inappwebview: ^6.1.5
 
-  ffmpeg_kit_flutter_new: ^3.2.0
+  # ffmpeg_kit_flutter_new: ^3.2.0
+  ffmpeg_kit_flutter_new_min_gpl: ^1.1.0
 
   # pour la gestion de nouvelle version
   upgrader: ^12.1.0
