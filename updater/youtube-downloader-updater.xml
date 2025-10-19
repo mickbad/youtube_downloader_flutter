@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- https://sparkle-project.org/documentation/publishing/ -->
+<!-- sample : https://raw.githubusercontent.com/larryaasen/upgrader/master/test/testappcast_macos.xml -->
+
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>Youtube Downloader</title>
+
+        <item>
+            <title>Version 1.4.12</title>
+            <description>
+                Hotfix youtube downloader decypher.
+            </description>
+            <enclosure url="https://github.com/mickbad/releases/" sparkle:version="1.4.12" sparkle:os="windows" />
+            <sparkle:criticalUpdate />
+        </item>
+
+        <item>
+            <title>Version 1.4.12</title>
+            <description>
+                Hotfix youtube downloader decypher.
+            </description>
+            <enclosure url="https://github.com/mickbad/releases/" sparkle:version="1.4.12" sparkle:os="linux" />
+            <sparkle:criticalUpdate />
+        </item>
+
+        <item>
+            <title>Version 1.4.12</title>
+            <description>
+                Hotfix youtube downloader decypher.
+            </description>
+            <enclosure url="https://github.com/mickbad/releases/" sparkle:version="1.4.12" sparkle:os="macos" />
+            <sparkle:criticalUpdate />
+        </item>
+
+
+        <!-- Sample IOS
+         os available = ios, macos, linux, windows, android
+
+
+            <item>
+                <title>Version 2.0</title>
+                <description>This is an update.</description>
+                <enclosure url="#" sparkle:version="2.0" sparkle:os="ios" />
+                <sparkle:criticalUpdate />
+            </item>
+        -->
+
+    </channel>
+</rss>
+
