@@ -9,28 +9,23 @@
 
         <item>
             <title>Version 1.4.12</title>
-            <description>
-                Hotfix youtube downloader decypher.
-            </description>
-            <enclosure url="https://github.com/mickbad/releases/" sparkle:version="1.4.12" sparkle:os="windows" />
+            <description>Hotfix youtube downloader decypher.</description>
+            <enclosure url="https://github.com/mickbad/youtube_downloader_flutter/releases" sparkle:version="1.4.12" sparkle:os="windows" />
             <sparkle:criticalUpdate />
         </item>
 
         <item>
             <title>Version 1.4.12</title>
-            <description>
-                Hotfix youtube downloader decypher.
-            </description>
-            <enclosure url="https://github.com/mickbad/releases/" sparkle:version="1.4.12" sparkle:os="linux" />
+            <description>Hotfix youtube downloader decypher.</description>
+
+            <enclosure url="https://github.com/mickbad/youtube_downloader_flutter/releases" sparkle:version="1.4.12" sparkle:os="linux" />
             <sparkle:criticalUpdate />
         </item>
 
         <item>
             <title>Version 1.4.12</title>
-            <description>
-                Hotfix youtube downloader decypher.
-            </description>
-            <enclosure url="https://github.com/mickbad/releases/" sparkle:version="1.4.12" sparkle:os="macos" />
+            <description>Hotfix youtube downloader decypher.</description>
+            <enclosure url="https://github.com/mickbad/youtube_downloader_flutter/releases" sparkle:version="1.4.12" sparkle:os="macos" />
             <sparkle:criticalUpdate />
         </item>
 
